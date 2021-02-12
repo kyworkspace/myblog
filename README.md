@@ -6,3 +6,5 @@
 
 ### 2021-02-12 페이지, 기능 병합
 - FISRT INIT
+- 사진 갤러리, 동영상 갤러리 기능 분할
+- Picture route, Model 추가
