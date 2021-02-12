@@ -7,14 +7,14 @@ import LoginPage from "./views/LoginPage/LoginPage.js";
 import RegisterPage from "./views/RegisterPage/RegisterPage.js";
 import NavBar from "./views/NavBar/NavBar";
 import Footer from "./views/Footer/Footer"
-import UploadProductPage from './views/UploadProductPage/UploadProductPage';
-import DetailProductPage from './views/DetailProductPage/DetailProductPage';
-import CartPage from './views/CartPage/CartPage';
-import HistoryPage from './views/HistoryPage/HistoryPage';
-import VideoUploadPage from './views/VideoUploadPage/VideoUploadPage';
-import VideoDetailPage from './views/VideoDetailPage/VideoDetailPage';
-import SubscriptionPage from './views/SubscriptionPage/SubscriptionPage';
-import VideoLandingPage from './views/VideoLandingPage/VideoLandingPage';
+
+import VideoUploadPage from './views/Video/VideoUploadPage/VideoUploadPage';
+import VideoDetailPage from './views/Video/VideoDetailPage/VideoDetailPage';
+import SubscriptionPage from './views/Video/SubscriptionPage/SubscriptionPage';
+import VideoLandingPage from './views/Video/VideoLandingPage/VideoLandingPage';
+import PictureLandingPage from './views/Picture/PictureLandingPage/PictureLandingPage';
+import UploadPicturePage from './views/Picture/UploadPicturePage/UploadPicturePage';
+import DetailPicturepage from './views/Picture/DetailPicturePage/DetailPicturepage';
 
 //null   Anyone Can go inside
 //true   only logged in user can go inside
@@ -29,10 +29,11 @@ function App() {
           <Route exact path="/" component={Auth(LandingPage, null)} />
           <Route exact path="/login" component={Auth(LoginPage, false)} />
           <Route exact path="/register" component={Auth(RegisterPage, false)} />
-          <Route exact path="/product/upload" component={Auth(UploadProductPage, true)} />
-          <Route exact path="/product/:productId" component={Auth(DetailProductPage, null)} />
-          <Route exact path="/user/cart" component={Auth(CartPage, true)} />
-          <Route exact path="/history" component={Auth(HistoryPage, true)} />
+
+          <Route exact path="/picture" component={Auth(PictureLandingPage, null)} />
+          <Route exact path="/picture/upload" component={Auth(UploadPicturePage, true)} />
+          <Route exact path="/picture/:pictureId" component={Auth(DetailPicturepage, null)} />
+
 
           <Route exact path="/video" component={Auth(VideoLandingPage, null)} />
           <Route exact path="/video/upload" component={Auth(VideoUploadPage, true)} />

@@ -63,7 +63,7 @@ export function addToCart(productId) {
 }
 export function getCartItems(cartItems, userCart) {
     //상품을 여러개 가져와야함
-    const request = axios.get(`/api/product/product_by_id?id=${cartItems}&type=array`)
+    const request = axios.get(`/api/product/picturedetail?id=${cartItems}&type=array`)
         .then(response => {
             //cartItem에 해당하는 Product Collection을 가져와서 Quatity 정보를 넣어줘야함
             userCart.forEach(item => {

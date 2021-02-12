@@ -5,7 +5,7 @@ import moment from 'moment';
 const { Title } = Typography;
 const { Meta } = Card;
 
-function LandingPage() {
+function VideoLandingPage() {
 
     const [Video, setVideo] = useState([]);//배열형
 
@@ -63,4 +63,4 @@ function LandingPage() {
     )
 }
 
-export default LandingPage
+export default VideoLandingPage

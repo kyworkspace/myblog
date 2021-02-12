@@ -13,7 +13,7 @@ function FileUpload(props) {
             header: { 'content-type': 'multipart/form-data' }
         }
         formData.append("file", files[0])
-        Axios.post('/api/product/image', formData, config)
+        Axios.post('/api/util/image', formData, config)
             .then(response => {
                 if (response.data.success) {
                     console.log(response.data);
