@@ -34,6 +34,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use('/api/users', require('./routes/users'));
+app.use('/api/board', require('./routes/board'));
 app.use('/api/util', require('./routes/util'));
 app.use('/api/picture', require('./routes/picture'));
 app.use('/api/video', require('./routes/video'));

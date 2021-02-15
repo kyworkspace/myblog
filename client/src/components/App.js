@@ -15,6 +15,9 @@ import VideoLandingPage from './views/Video/VideoLandingPage/VideoLandingPage';
 import PictureLandingPage from './views/Picture/PictureLandingPage/PictureLandingPage';
 import UploadPicturePage from './views/Picture/UploadPicturePage/UploadPicturePage';
 import DetailPicturepage from './views/Picture/DetailPicturePage/DetailPicturepage';
+import BoardLandingPage from './views/Board/BoardLandingPage/BoardLandingPage';
+import UploadBoardPage from './views/Board/UploadBoardPage/UploadBoardPage';
+import DetailBoardPage from './views/Board/DetailBoardPage/DetailBoardPage'
 
 //null   Anyone Can go inside
 //true   only logged in user can go inside
@@ -30,10 +33,12 @@ function App() {
           <Route exact path="/login" component={Auth(LoginPage, false)} />
           <Route exact path="/register" component={Auth(RegisterPage, false)} />
 
+          <Route exact path="/board" component={Auth(BoardLandingPage, null)} />
+          <Route exact path="/board/:boardId" component={Auth(DetailBoardPage, null)} />
+
           <Route exact path="/picture" component={Auth(PictureLandingPage, null)} />
           <Route exact path="/picture/upload" component={Auth(UploadPicturePage, true)} />
           <Route exact path="/picture/:pictureId" component={Auth(DetailPicturepage, null)} />
-
 
           <Route exact path="/video" component={Auth(VideoLandingPage, null)} />
           <Route exact path="/video/upload" component={Auth(VideoUploadPage, true)} />
