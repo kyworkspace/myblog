@@ -3,14 +3,17 @@ import Axios from 'axios';
 import { Card, Icon, Col, Row, List, Avatar, Button } from 'antd'
 import UploadBoardPage from '../UploadBoardPage/UploadBoardPage';
 import LinesEllipsis from 'react-lines-ellipsis'
+import DetailBoardPage from '../DetailBoardPage/DetailBoardPage';
 
 function BoardLandingPage(props) {
     const [BoardContents, setBoardContents] = useState([]);
-    const [Skip, setSkip] = useState(0)
-    const [Limit, setLimit] = useState(5)
+    const [Skip, setSkip] = useState(0) //호출 인덱스
+    const [Limit, setLimit] = useState(5) //페이지당 출력갯수
     const [PostSize, setPostSize] = useState(0) // 목록에 보이는 배열 갯수
     const [SearchTerm, setSearchTerm] = useState("")
-    const [IsModalVisible, setIsModalVisible] = useState(false);
+    const [IsModalVisible, setIsModalVisible] = useState(false); //게시판 글올리기 모달 플래그
+    const [IsDetailModalVisible, setIsDetailModalVisible] = useState(false) //상세보기 모달 오픈 플래그
+    const [DetailViewItem, setDetailViewItem] = useState({}); //상세보기 아이템
 
     useEffect(() => {
         //필터값이 들어간 바디
@@ -64,6 +67,13 @@ function BoardLandingPage(props) {
     const onBoardUploadModalHandler = (flag) => {
         setIsModalVisible(flag);
     }
+    const onBoardDetailModalHandler = (flag) => {
+        setIsDetailModalVisible(flag)
+    }
+    const onDetailBoardModalView = (item) => {
+        setIsDetailModalVisible(true)
+        setDetailViewItem(item);
+    }
     const renderBoardList = BoardContents.map((item, idx) => {
         let date = new Date(item.createdAt);
         let year = date.getFullYear();
@@ -72,7 +82,7 @@ function BoardLandingPage(props) {
         return (
             <>
                 <div style={{ marginTop: '1rem' }} />
-                <a href={`/board/${item._id}`} key={idx}>
+                <a key={idx} onClick={() => onDetailBoardModalView(item)}>
                     <Card
                         hoverable
                     >
@@ -145,6 +155,8 @@ function BoardLandingPage(props) {
                 </Col>
             </Row>
             <UploadBoardPage isModalVisible={IsModalVisible} ModalHandler={onBoardUploadModalHandler} UploadHandler={uploadBoardReRendering} />
+            {IsDetailModalVisible
+                && <DetailBoardPage isModalVisible={IsDetailModalVisible} ModalHandler={onBoardDetailModalHandler} item={DetailViewItem} />}
 
         </div>
     )

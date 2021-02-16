@@ -1,38 +1,36 @@
 import Axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Row, Col } from 'antd';
+import { Form, Input, Modal, Avatar, Typography } from 'antd';
+
+
 
 function DetailBoardPage(props) {
-
-    const boardId = props.match.params.boardId;
-
-    //정보가 오브젝트 이기 때문에 {}로 받음
-    const [Product, setProduct] = useState({});
-
+    const { Text } = Typography;
+    const { item } = props;
+    const [IsModalVisible, setIsModalVisible] = useState(false)
     useEffect(() => {
-        console.log(boardId)
-        //url에서 유니크값을 가져와야함
-        // Axios.get(`/api/picture/picturedetail?id=${pictureId}&type=single`)
-        //     .then(response => {
-        //         setProduct(response.data[0]);
-        //     })
-        //     .catch(err => alert(err))
-
+        console.log(props.item)
     }, [])
     return (
-        <div style={{ width: '100%', padding: '3rem 4rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <h1>{Product.title}</h1>
-            </div>
-            <br />
-            <Row gutter={[16, 16]}>
-                <Col lg={12} sm={24}>
-                    {/* Board Information */}
-                </Col>
-                <Col lg={12} sm={24}>
-                    {/* Comment */}
-                </Col>
-            </Row>
+        <div>
+            <Modal title={[<Avatar src={item.writer.image} />, <Text >{item.writer.name}</Text>]} visible={props.isModalVisible} onOk={() => props.ModalHandler(false)}>
+                <div style={{ maxWidth: '700px', margin: '2rem auto' }}>
+                    <Form >
+                        <label>제목</label>
+                        <br />
+                        <Text>{item.title}</Text>
+                        <br />
+                        <br />
+                        <label>설명</label>
+                        <div>
+                            <Text keyboard>{item.description}</Text>
+                            <Text >Ant Design (keyboard)</Text>
+                        </div>
+                        <br />
+                        <br />
+                    </Form>
+                </div>
+            </Modal>
         </div>
     )
 }

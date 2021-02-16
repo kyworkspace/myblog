@@ -53,7 +53,6 @@ function UploadBoardPage(props) {
     return (
         <>
             {user.userData &&
-
                 <Modal title={[<Avatar src={user.userData.image} />, <p>게시물 업로드</p>]} visible={props.isModalVisible} onOk={handleOk} onCancel={handleCancel} >
                     <div style={{ maxWidth: '700px', margin: '2rem auto' }}>
                         <Form >
