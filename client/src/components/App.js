@@ -34,7 +34,6 @@ function App() {
           <Route exact path="/register" component={Auth(RegisterPage, false)} />
 
           <Route exact path="/board" component={Auth(BoardLandingPage, null)} />
-          <Route exact path="/board/:boardId" component={Auth(DetailBoardPage, null)} />
 
           <Route exact path="/picture" component={Auth(PictureLandingPage, null)} />
           <Route exact path="/picture/upload" component={Auth(UploadPicturePage, true)} />

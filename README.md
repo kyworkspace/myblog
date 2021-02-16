@@ -28,3 +28,6 @@
 ![image](https://user-images.githubusercontent.com/45280952/107959288-93564d80-6fe6-11eb-895f-978a7fd32fbf.png)
 - 모달
 ![image](https://user-images.githubusercontent.com/45280952/107959336-a1a46980-6fe6-11eb-9aa0-85817a327663.png)
+
+- 상세보기도 모달로 제작함
+- textArea로 받은 개행 문장들은 div - stlye - preLine으로 표시해주면 된다.

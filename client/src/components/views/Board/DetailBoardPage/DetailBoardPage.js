@@ -22,9 +22,8 @@ function DetailBoardPage(props) {
                         <br />
                         <br />
                         <label>설명</label>
-                        <div>
-                            <Text keyboard>{item.description}</Text>
-                            <Text >Ant Design (keyboard)</Text>
+                        <div style={{ whiteSpace: 'pre-line' }}>
+                            {item.description}
                         </div>
                         <br />
                         <br />
