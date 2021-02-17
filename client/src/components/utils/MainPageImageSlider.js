@@ -1,7 +1,7 @@
 import { Carousel } from 'antd'
 import React, { useEffect, useState } from 'react'
 
-function ImageSlider(props) {
+function MainPageImageSlider(props) {
 
     const [Images, setImages] = useState([]);
 
@@ -14,10 +14,12 @@ function ImageSlider(props) {
     return (
         <div>
             <Carousel autoplay
-                beforeChange={onBeforeChange}>
+                beforeChange={onBeforeChange} >
                 {props.images.map((image, i) => (
                     <div key={i} >
-                        <img src={`http://localhost:5000/${image}`} style={{ width: "100%", height: "150px" }} />
+                        <div style={{ height: '100%', width: '100%', textAlign: 'center' }}>
+                            <img src={`http://localhost:5000/${image}`} style={{ height: "300px" }} />
+                        </div>
                     </div>
                 ))}
             </Carousel>
@@ -26,4 +28,4 @@ function ImageSlider(props) {
     )
 }
 
-export default ImageSlider
+export default MainPageImageSlider

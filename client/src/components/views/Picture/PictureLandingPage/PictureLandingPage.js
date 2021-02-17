@@ -34,9 +34,9 @@ function PictureLandingPage() {
                 if (response.data.success) {
                     if (body.loadMore) { //더보기를 눌렀을 경우
                         //기존 배열에 스프레드 오퍼레이터를 써서 붙여줌
-                        setPictures([...Pictures, ...response.data.productsInfo])
+                        setPictures([...Pictures, ...response.data.pictureInfo])
                     } else {
-                        setPictures(response.data.productsInfo)
+                        setPictures(response.data.pictureInfo)
                     }
                     setPostSize(response.data.postSize) //더보기 버튼을 보여줄지 말지
                 } else {
