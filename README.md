@@ -37,4 +37,6 @@
 
 ### 2021-02-18
 - 메인 랜딩 페이지 화면 레이아웃 완료
+![image](https://user-images.githubusercontent.com/45280952/108357386-b6743d80-7230-11eb-98c8-2dcec7ede358.png)
+
 - getBoardList는 메서드 공유로 바꿔봄
