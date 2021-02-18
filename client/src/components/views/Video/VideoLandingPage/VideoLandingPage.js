@@ -11,7 +11,7 @@ function VideoLandingPage() {
 
     useEffect(() => {
 
-        Axios.get('/api/video/getVideos')
+        Axios.post('/api/video/getVideos')
             .then(response => {
                 if (response.data.success) {
                     console.log(response.data);

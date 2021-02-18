@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import Axios from 'axios';
-import { Card, Icon, Col, Row } from 'antd'
-import ImageSlider from '../../utils/ImageSlider';
-import MainPageImageSlider from '../../utils/MainPageImageSlider';
+import { Card, Icon, Col, Row, Typography, List, Avatar } from 'antd'
+import MainPageImageSlider from './Sections/MainPageImageSlider';
+import { getBoardList } from '../Board/BoardLandingPage/BoardLandingPage'
+import { skips } from 'debug';
+import LinesEllipsis from 'react-lines-ellipsis';
+
+const { Title } = Typography;
+
 function LandingPage() {
     const [Pictures, setPictures] = useState([]);
-    const [PostSize, setPostSize] = useState(0) // 목록에 보이는 배열 갯수
+    const [Video, setVideo] = useState({});
+    const [BoardContents, setBoardContents] = useState([])
+    const [Loading, setLoading] = useState(true);
     const [Filters, setFilters] = useState({
         continents: [],
         price: []
@@ -18,6 +25,7 @@ function LandingPage() {
     }, [])
 
     const getContents = () => {
+        //사진 불러오는 조건
         let body = {
             limit: 10,
         }
@@ -37,28 +45,39 @@ function LandingPage() {
                             })
                         }
                     })
-                    console.log(pics)
                     setPictures(pics)
                     //최근사진 10개
                 } else {
                     alert("사진을 불러오는데 실패하였습니다.")
                 }
             })
-    }
+        //동영상 불러오는 조건
+        body = {
+            limit: 1,
+        }
+        Axios.post("/api/video/getVideos", body)
+            .then(response => {
+                if (response.data.success) {
+                    setVideo(response.data.videos[0])
+                } else {
+                    alert("동영상을 불러오는데 실패했습니다.")
+                }
+            })
+        body = {
+            limit: 5,
+            skip: 0
+        }
+        getBoardList(body).then(response => {
+            if (response.success) {
+                console.log(response.boardList)
+                setBoardContents(response.boardList)
+            } else {
+                alert("게시물을 불러오는데 실패하였습니다.")
+            }
+        })
 
-    const loadMoreHandler = () => {
-        //SKIP과 LIMIT은 State로 관리
-        //버튼을 누를때마다 Skip을 관리해서 값을 던져움
-
-        // let skip = Skip + Limit;
-
-        // let body = {
-        //     skip: skip,
-        //     limit: Limit,
-        //     loadMore: true
-        // }
-        // getContents(body)
-        // setSkip(skip);
+        //로딩끝
+        setLoading(false)
     }
 
     return (
@@ -66,24 +85,46 @@ function LandingPage() {
             <div style={{ textAlign: 'center' }}>
                 <h2>게시판 모아보기<Icon type="rocket" /></h2>
             </div>
-            {/* 게시판 모아보기 */}
-            <Row gutter={[16, 16]}>
-                {/*  */}
-                <Col lg={12} xs={24}>
-                    최근 등록된 사진
-                    <MainPageImageSlider images={Pictures} />
-                </Col>
-                <Col lg={12} xs={24}>
-                    최근 등록된 동영상
+            {
+                Loading ?
+                    <div>로딩중</div>
+                    :
+                    <>
+                        <Row gutter={[16, 16]}>
+                            <Col lg={12} xs={24}>
+                                최근 등록된 사진 사진 게시판으로 이동
+                        <MainPageImageSlider images={Pictures} />
+                            </Col>
+                            <Col lg={12} xs={24}>
+                                <div style={{ width: "100%", height: "100%" }}>
+                                    <Title level={3}>{Video.title}</Title>
+                                    <video style={{ height: '300px' }} src={`http://localhost:5000/${Video.filePath}`} controls />
+                                </div>
+                            </Col>
+                        </Row>
+                        <Row gutter={[16, 16]}>
+                            <Col lg={24} xs={24}>
+                                최근 등록된 게시물
+                                <List
+                                    itemLayout="horizontal"
+                                    dataSource={BoardContents}
+                                    renderItem={item => (
+                                        <List.Item>
+                                            <List.Item.Meta
+                                                avatar={<Avatar src={item.writer.image} />}
+                                                title={item.title}
+                                                description={<div style={{ width: "100vh", height: "50px", whiteSpace: 'pre-line', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.description}</div>}
+                                            />
+                                        </List.Item>
 
-                </Col>
-            </Row>
-            <Row gutter={[16, 16]}>
-                <Col lg={24} xs={24}>
-                    최근 등록된 게시물
-                </Col>
-            </Row>
-        </div>
+                                    )}
+                                />
+                            </Col>
+                        </Row>
+                    </>
+            }
+
+        </div >
     )
 }
 

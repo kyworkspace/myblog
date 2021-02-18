@@ -56,15 +56,50 @@ router.post('/uploadVideo', (req, res) => {
     });
 })
 
-router.get('/getVideos', (req, res) => {
+router.post('/getVideos', (req, res) => {
     //비디오 목록을 가져온다
     //Video 컬렉션 안에 있는 모든 비디오를 가져옴
-    Video.find()
-        .populate('writer')
-        .exec((err, videos) => {
-            if (err) return res.status(400).send(err);
-            res.status(200).json({ success: true, videos })
+    let limit = req.body.limit ? parseInt(req.body.limit) : 20;
+    let skip = req.body.skip ? parseInt(req.body.skip) : 0;
+    let term = req.body.searchTerm;
+    let findArgs = {};
+    if (term) {
+        Video.find(findArgs)
+            .find({ $text: { $search: term } }) //텍스트적용 하는곳
+            .populate('writer')
+            .skip(skip) //가져올 인덱스 전달
+            .sort({ createdAt: -1 })
+            .limit(limit)// 몽고디비에 가져올 숫자를 던져줌
+            .exec((err, videos) => {
+                if (err) return res.status(400).send(err);
+                res.status(200).json({ success: true, videos })
+            })
+    } else {
+        Video.find(findArgs)
+            .populate('writer')
+            .skip(skip) //가져올 인덱스 전달
+            .sort({ createdAt: -1 })
+            .limit(limit)// 몽고디비에 가져올 숫자를 던져줌
+            .exec((err, videos) => {
+                if (err) return res.status(400).send(err);
+                res.status(200).json({ success: true, videos })
+            })
+    }
+
+})
+router.get('/getMainVideo', (req, res) => {
+    let findArgs = {};
+
+    Video.find(findArgs)
+        .populate("writer")
+        .skip(skip) //가져올 인덱스 전달
+        .limit(limit)// 몽고디비에 가져올 숫자를 던져줌
+        .exec((err, pictureInfo) => {
+            if (err) return res.status(400).json({ success: false, err })
+            //돌아오는 값에 컬렉션 갯수를 추가해줌(postSize)
+            res.status(200).json({ success: true, pictureInfo, postSize: pictureInfo.length })
         })
+
 })
 
 router.post('/getSubscriptionVideos', (req, res) => {

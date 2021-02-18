@@ -5,6 +5,15 @@ import UploadBoardPage from '../UploadBoardPage/UploadBoardPage';
 import LinesEllipsis from 'react-lines-ellipsis'
 import DetailBoardPage from '../DetailBoardPage/DetailBoardPage';
 
+export const getBoardList = (body) => {
+    return new Promise((resolve, reject) => {
+        Axios.post("/api/board/list", body)
+            .then(response => {
+                resolve(response.data)
+            })
+    })
+}
+
 function BoardLandingPage(props) {
     const [BoardContents, setBoardContents] = useState([]);
     const [Skip, setSkip] = useState(0) //호출 인덱스
@@ -25,7 +34,14 @@ function BoardLandingPage(props) {
             skip: Skip,
             limit: Limit,
         }
-        getBoardList(body)
+        getBoardList(body).then(response => {
+            if (response.success) {
+                setBoardContents([...BoardContents, ...response.boardList])
+                setPostSize(response.postSize) //더보기 버튼을 보여줄지 말지
+            } else {
+                alert("게시판 목록 정보를 불러오는데 실패하였습니다.")
+            }
+        })
     }
 
     const loadMoreHandler = () => {
@@ -40,30 +56,16 @@ function BoardLandingPage(props) {
             loadMore: true
         }
         getBoardList(body)
-        setSkip(skip);
-    }
-    const getBoardList = (body) => {
-        console.log(body)
-        Axios.post("/api/board/list", body)
             .then(response => {
-                if (response.data.success) {
-                    if (body.loadMore) { //더보기를 눌렀을 경우
-                        //기존 배열에 스프레드 오퍼레이터를 써서 붙여줌
-                        console.log(response.data.boardList)
-
-                        setBoardContents([...BoardContents, ...response.data.boardList])
-                    } else {
-                        setBoardContents(response.data.boardList)
-                    }
-                    setPostSize(response.data.postSize) //더보기 버튼을 보여줄지 말지
-
+                if (response.success) {
+                    setBoardContents([...BoardContents, ...response.boardList])
+                    setPostSize(response.postSize) //더보기 버튼을 보여줄지 말지
                 } else {
                     alert("게시판 목록 정보를 불러오는데 실패하였습니다.")
                 }
-
             })
+        setSkip(skip);
     }
-
     const onBoardUploadModalHandler = (flag) => {
         setIsModalVisible(flag);
     }
