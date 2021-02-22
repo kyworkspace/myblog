@@ -16,7 +16,6 @@
 - 신규입력은 모달로 처리
 - react-lines-ellipsis 설치
 - 사진 목록
-![image](https://user-images.githubusercontent.com/45280952/107959599-f8aa3e80-6fe6-11eb-8c06-997cb7a08d32.png)
 - 영상 목록
 ![image](https://user-images.githubusercontent.com/45280952/107959668-0bbd0e80-6fe7-11eb-9cbd-a64c251c3dfc.png)
 
@@ -43,3 +42,4 @@
 ### 2021-02-22
 - Landing Page 이미지 슬라이더 직접만들어서 추가함
 - 비록 setTimeout으로 만든 간단한 거지만, 이미지 위치 조정가능해서 좋구만
+![image](https://user-images.githubusercontent.com/45280952/108722523-9b723800-7566-11eb-8fa9-13feb953fc2a.png)
