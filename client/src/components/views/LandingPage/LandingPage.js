@@ -83,7 +83,7 @@ function LandingPage() {
     return (
         <div style={{ width: '75%', margin: '3rem auto' }}>
             <div style={{ textAlign: 'center' }}>
-                <h2>게시판 모아보기<Icon type="rocket" /></h2>
+                <h2>KYP LANDING<Icon type="plain" /></h2>
             </div>
             {
                 Loading ?
@@ -92,19 +92,21 @@ function LandingPage() {
                     <>
                         <Row gutter={[16, 16]}>
                             <Col lg={12} xs={24}>
-                                최근 등록된 사진 사진 게시판으로 이동
-                        <MainPageImageSlider images={Pictures} />
+                                <a href="/picture">
+                                    <Title level={3}>최근 등록된 사진</Title>
+                                    {Pictures.length > 0 && <MainPageImageSlider images={Pictures} />}
+                                </a>
                             </Col>
                             <Col lg={12} xs={24}>
                                 <div style={{ width: "100%", height: "100%" }}>
-                                    <Title level={3}>{Video.title}</Title>
+                                    <Title level={3}>최근 등록된 동영상</Title>
                                     <video style={{ height: '300px' }} src={`http://localhost:5000/${Video.filePath}`} controls />
                                 </div>
                             </Col>
                         </Row>
                         <Row gutter={[16, 16]}>
                             <Col lg={24} xs={24}>
-                                최근 등록된 게시물
+                                <Title level={3}>최근 등록된 게시물</Title>
                                 <List
                                     itemLayout="horizontal"
                                     dataSource={BoardContents}
@@ -113,7 +115,7 @@ function LandingPage() {
                                             <List.Item.Meta
                                                 avatar={<Avatar src={item.writer.image} />}
                                                 title={item.title}
-                                                description={<div style={{ width: "100vh", height: "50px", whiteSpace: 'pre-line', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.description}</div>}
+                                                description={<div style={{ width: "100%", height: "50px", whiteSpace: 'pre-line', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.description}</div>}
                                             />
                                         </List.Item>
 
