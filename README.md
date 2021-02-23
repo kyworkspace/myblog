@@ -43,3 +43,6 @@
 - Landing Page 이미지 슬라이더 직접만들어서 추가함
 - 비록 setTimeout으로 만든 간단한 거지만, 이미지 위치 조정가능해서 좋구만
 ![image](https://user-images.githubusercontent.com/45280952/108722523-9b723800-7566-11eb-8fa9-13feb953fc2a.png)
+
+### 2021-02-23
+- 사진 삭제기능 추가
