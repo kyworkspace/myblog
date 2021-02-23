@@ -66,7 +66,7 @@ function PictureLandingPage() {
         let month = date.getMonth() + 1;
         let day = date.getDate();
         return (
-            <Col key={i} lg={6} md={8} xs={24}>
+            <Col key={i} xl={3} lg={4} md={6} xs={24}>
                 <Card
                     cover={<a href={`/picture/${picture._id}`}> <ImageSlider images={picture.images} /> </a>}
                 >

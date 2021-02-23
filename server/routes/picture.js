@@ -110,6 +110,17 @@ router.post("/pictures", (req, res) => {
             })
 
     })
+    //pictureDelete
+    router.post('/delete', (req, res) => {
+        let pictureId = req.body.pictureId;
+
+        Picture.deleteOne({ _id: pictureId })
+            .exec((err) => {
+                if (err) return res.status(400).send({ success: false, err })
+                return res.status(200).send({ success: true })
+            })
+
+    })
 })
 
 module.exports = router;
