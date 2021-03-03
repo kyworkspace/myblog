@@ -45,4 +45,4 @@
 ![image](https://user-images.githubusercontent.com/45280952/108722523-9b723800-7566-11eb-8fa9-13feb953fc2a.png)
 
 ### 2021-02-23
-- 사진 삭제기능 추가
+- 사진 삭제기능 추가.
