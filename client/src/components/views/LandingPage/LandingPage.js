@@ -3,8 +3,8 @@ import Axios from 'axios';
 import { Card, Icon, Col, Row, Typography, List, Avatar } from 'antd'
 import MainPageImageSlider from './Sections/MainPageImageSlider';
 import { getBoardList } from '../Board/BoardLandingPage/BoardLandingPage'
-import { skips } from 'debug';
-import LinesEllipsis from 'react-lines-ellipsis';
+import empty from '../../../images/empty.png'
+
 
 const { Title } = Typography;
 
@@ -39,7 +39,7 @@ function LandingPage() {
                             item.images.forEach(image => {
                                 // let obj = new Object()
                                 // obj.url = image
-                                // pics.push(obj);
+                                console.log(item)
                                 pics.push(image);
                                 picCnt++;
                             })
@@ -69,7 +69,6 @@ function LandingPage() {
         }
         getBoardList(body).then(response => {
             if (response.success) {
-                console.log(response.boardList)
                 setBoardContents(response.boardList)
             } else {
                 alert("게시물을 불러오는데 실패하였습니다.")
@@ -94,7 +93,16 @@ function LandingPage() {
                             <Col lg={12} xs={24}>
                                 <a href="/picture">
                                     <Title level={3}>최근 등록된 사진</Title>
-                                    {Pictures.length > 0 && <MainPageImageSlider images={Pictures} />}
+                                    {
+                                        Pictures.length > 0 ?
+                                            <MainPageImageSlider images={Pictures} />
+                                            :
+                                            <div style={{ textAlign: 'center', width: "100%", height: "300px" }}>
+                                                <img src={empty} style={{ width: 100, height: 100 }} />
+                                                <br />
+                                                이미지가 없습니다.
+                                            </div>
+                                    }
                                 </a>
                             </Col>
                             <Col lg={12} xs={24}>

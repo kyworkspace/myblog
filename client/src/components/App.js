@@ -35,9 +35,14 @@ function App() {
 
           <Route exact path="/board" component={Auth(BoardLandingPage, null)} />
 
+          {/* 리스트 */}
           <Route exact path="/picture" component={Auth(PictureLandingPage, null)} />
-          <Route exact path="/picture/upload" component={Auth(UploadPicturePage, true)} />
-          <Route exact path="/picture/:pictureId" component={Auth(DetailPicturepage, null)} />
+          {/* 업로드 */}
+          <Route exact path="/picture/:type" component={Auth(UploadPicturePage, true)} />
+          {/* 디테일 */}
+          <Route exact path="/picture/detail/:pictureId" component={Auth(DetailPicturepage, null)} />
+          {/* 수정 */}
+          <Route exact path="/picture/:type/:pictureId" component={Auth(UploadPicturePage, null)} />
 
           <Route exact path="/video" component={Auth(VideoLandingPage, null)} />
           <Route exact path="/video/upload" component={Auth(VideoUploadPage, true)} />

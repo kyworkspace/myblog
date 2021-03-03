@@ -5,8 +5,8 @@ import Axios from 'axios';
 
 function FileUpload(props) {
 
-    const [Images, setImages] = useState([]);
-
+    const { parentImages } = props;
+    const [Images, setImages] = useState(parentImages.length > 0 ? parentImages : []);
     const dropHandler = (files) => {
         let formData = new FormData();
         const config = {
@@ -61,7 +61,7 @@ function FileUpload(props) {
             <div style={{ display: 'flex', width: '350px', height: '240px', overflow: 'scroll' }}>
                 {Images.map((item, index) => (
                     <div key={index} onClick={() => deleteHandler(item)}>
-                        <img style={{ minWidth: '300px', width: '300px', height: '240px' }}
+                        <img style={{ minWidth: '150px', width: '250px', minHeight: '120 px', maxHeight: '200px' }}
                             src={`http://localhost:5000/${item}`}
                         />
                     </div>

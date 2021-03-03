@@ -68,7 +68,7 @@ function PictureLandingPage() {
         return (
             <Col key={i} xl={3} lg={4} md={6} xs={24}>
                 <Card
-                    cover={<a href={`/picture/${picture._id}`}> <ImageSlider images={picture.images} /> </a>}
+                    cover={<a href={`/picture/detail/${picture._id}`}> <ImageSlider images={picture.images} /> </a>}
                 >
                     <Meta
                         title={picture.title}

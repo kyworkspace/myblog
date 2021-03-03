@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Typography, Button, Form, Input } from 'antd';
 import FileUpload from '../../../utils/FileUpload';
 import Axios from 'axios';
@@ -11,7 +11,9 @@ function UploadPicturePage(props) {
     const [Name, setName] = useState("");
     const [Description, setDescription] = useState("");
     const [Image, setImage] = useState([]);
+    const [Loading, setLoading] = useState(true)
 
+    const { type, pictureId } = props.match.params
 
     const TitileHandler = (e) => {
         setName(e.currentTarget.value);
@@ -27,7 +29,6 @@ function UploadPicturePage(props) {
         if (!Name || !Description || !Image) {
             return alert("모든 값이 입력되어야 합니다.");
         }
-
         const body = {
             writer: props.user.userData._id,
             title: Name,
@@ -48,32 +49,58 @@ function UploadPicturePage(props) {
 
 
     }
+    useEffect(() => {
+        if (type === 'update') {
+            Axios.get(`/api/picture/picturedetail?id=${pictureId}&type=single`)
+                .then(response => {
+                    console.log(response.data[0].images)
+                    setImage(response.data[0].images)
+                    setLoading(false);
+                })
+                .catch(err => alert(err))
+        } else {
+            setLoading(false);
+        }
+    }, [])
 
     return (
-        <div style={{ maxWidth: '700px', margin: '2rem auto' }}>
-            <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-                <Title>사진 업로드</Title>
-            </div>
-            <Form onSubmit={submitHandler}>
-                {/* DROP ZONE */}
-                <FileUpload refreshFunction={updateImages} />
-                <br />
-                <br />
-                <label>제목</label>
-                <Input value={Name} onChange={TitileHandler} />
-                <br />
-                <br />
-                <label>설명</label>
-                <TextArea value={Description} onChange={DescriptionHandler} />
-                <br />
-                <br />
-                <Button type="submit" onClick={submitHandler}>
-                    확인
+        <>
+            {
+                Loading
+                    ?
+                    <div>로딩중....</div>
+                    :
+                    <div style={{ maxWidth: '700px', margin: '2rem auto' }}>
+                        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+                            <Title>{
+                                type === 'upload' ?
+                                    '사진 업로드'
+                                    : '사진 업데이트'
+                            }</Title>
+                        </div>
+                        <Form onSubmit={submitHandler}>
+                            {/* DROP ZONE */}
+                            <FileUpload refreshFunction={updateImages} parentImages={Image} />
+                            <br />
+                            <br />
+                            <label>제목</label>
+                            <Input value={Name} onChange={TitileHandler} />
+                            <br />
+                            <br />
+                            <label>설명</label>
+                            <TextArea value={Description} onChange={DescriptionHandler} />
+                            <br />
+                            <br />
+                            <Button type="submit" onClick={submitHandler}>
+                                확인
                 </Button>
 
-            </Form>
+                        </Form>
 
-        </div>
+                    </div>
+            }
+        </>
+
     )
 }
 

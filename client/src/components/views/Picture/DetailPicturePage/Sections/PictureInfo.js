@@ -9,7 +9,9 @@ function PictureInfo(props) {
     const dispatch = useDispatch();
     const user = useSelector(state => state.user)
     const onUpdatePicture = () => {
-        console.log(user);
+        props.history.push(`/picture/${`update`}/${props.detail._id}`)
+
+
     }
     const onDeletePicture = () => {
         let body = {

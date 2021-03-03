@@ -46,19 +46,19 @@ router.post("/pictures", (req, res) => {
     //필터 적용하기 req.body.filters
     let findArgs = {};
 
-    for (let key in req.body.filters) {
-        //key => continents or price
-        if (req.body.filters[key].length > 0) {//각 필터가 있을때
-            if (key === "price") {
-                findArgs[key] = {
-                    $gte: req.body.filters[key][0],
-                    $lte: req.body.filters[key][1],
-                }
-            } else {
-                findArgs[key] = req.body.filters[key];
-            }
-        }
-    }
+    // for (let key in req.body.filters) {
+    //     //key => continents or price
+    //     if (req.body.filters[key].length > 0) {//각 필터가 있을때
+    //         if (key === "price") {
+    //             findArgs[key] = {
+    //                 $gte: req.body.filters[key][0],
+    //                 $lte: req.body.filters[key][1],
+    //             }
+    //         } else {
+    //             findArgs[key] = req.body.filters[key];
+    //         }
+    //     }
+    // }
     //텍스트 검색시 의 조건
 
     if (term) {

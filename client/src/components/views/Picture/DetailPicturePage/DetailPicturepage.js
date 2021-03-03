@@ -20,7 +20,6 @@ function DetailPicturepage(props) {
                 setLoading(false);
             })
             .catch(err => alert(err))
-
     }, [])
     return (
         <>
