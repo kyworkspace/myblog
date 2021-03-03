@@ -16,7 +16,6 @@ function FileUpload(props) {
         Axios.post('/api/util/image', formData, config)
             .then(response => {
                 if (response.data.success) {
-                    console.log(response.data);
                     //원래 이미지에 새로운 이미지(경로)를 추가해서 붙이는 거임
                     setImages([...Images, response.data.filePath])
                     //부모 컴포넌트에 값 전달
@@ -41,33 +40,40 @@ function FileUpload(props) {
 
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Dropzone onDrop={dropHandler}>
-                {({ getRootProps, getInputProps }) => (
-                    <div
-                        style={{
-                            width: 300, height: 240, border: '1px solid lightgray',
-                            display: 'flex', alignItems: 'center', justifyContent: 'center'
-                        }}
+        <>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <Dropzone onDrop={dropHandler}>
+                    {({ getRootProps, getInputProps }) => (
+                        <div
+                            style={{
+                                width: 600, height: 200, border: '1px solid lightgray',
+                                display: 'flex', alignItems: 'center', justifyContent: 'center'
+                            }}
 
-                        {...getRootProps()}
-                    >
-                        <input {...getInputProps()} />
-                        <Icon type="plus" style={{ fontSize: '3rem' }} />
-                    </div>
-                )}
-            </Dropzone>
-
-            <div style={{ display: 'flex', width: '350px', height: '240px', overflow: 'scroll' }}>
-                {Images.map((item, index) => (
-                    <div key={index} onClick={() => deleteHandler(item)}>
-                        <img style={{ minWidth: '150px', width: '250px', minHeight: '120 px', maxHeight: '200px' }}
-                            src={`http://localhost:5000/${item}`}
-                        />
-                    </div>
-                ))}
+                            {...getRootProps()}
+                        >
+                            <input {...getInputProps()} />
+                            <Icon type="plus" style={{ fontSize: '3rem' }} />
+                            이미지를 올려주세요
+                        </div>
+                    )}
+                </Dropzone>
             </div>
-        </div>
+
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <div style={{ display: 'flex', width: '600px', height: '240px', overflow: 'scroll', overflowY: 'hidden' }}>
+                    {Images.map((item, index) => (
+                        <div key={index} onClick={() => deleteHandler(item)}>
+                            <div style={{ display: 'flex', justifyContent: "center", margin: '20px', backgroundColor: 'grey', borderRadius: "20px", minHeight: '200px' }}>
+                                <img style={{ minWidth: '150px', width: '250px', minHeight: '120 px', maxHeight: '200px' }}
+                                    src={`http://localhost:5000/${item}`}
+                                />
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </>
     )
 }
 
