@@ -11,7 +11,7 @@ const { Picture } = require("../models/Picture");
 var storage = multer.diskStorage({
     //파일이 저장되는 물리적인 경로
     destination: function (req, file, cb) {
-        cb(null, 'uploads/')
+        cb(null, 'uploads/picture/')
     },
     filename: function (req, file, cb) {
         cb(null, `${Date.now()}_${file.originalname}`)
@@ -24,6 +24,7 @@ router.post('/image', (req, res) => {
     upload(req, res, (err) => {
         //실패했을때
         if (err) return res.json({ success: false, err });
+        console.log(res.req.file)
         //성공했을때 경로와 파일을 전달해줌
         return res.json({ success: true, filePath: res.req.file.path, fileName: res.req.file.filename })
     })
@@ -120,6 +121,24 @@ router.post("/pictures", (req, res) => {
                 return res.status(200).send({ success: true })
             })
 
+    })
+    //사진 수정
+    router.post('/update', (req, res) => {
+        let pictureId = req.body.pictureId;
+        console.log(req.body.images)
+
+        Picture.findByIdAndUpdate({ _id: pictureId },
+            {
+                $set: {
+                    images: req.body.images,
+                    title: req.body.title,
+                    description: req.body.description
+                }
+            },
+            (err) => {
+                if (err) return res.status(400).send({ success: false, err })
+                return res.status(200).send({ success: true })
+            })
     })
 })
 

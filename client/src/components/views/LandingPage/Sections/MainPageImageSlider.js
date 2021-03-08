@@ -29,8 +29,8 @@ function MainPageImageSlider(props) {
     }
     return (
         <div>
-            <div style={{ height: '100%', width: '100%', backgroundColor: 'grey', textAlign: 'center' }}>
-                <img src={ImgSrc} style={{ height: "300px" }} />
+            <div style={{ height: '100%', maxWidth: '100%', backgroundColor: 'grey', textAlign: 'center' }}>
+                <img src={ImgSrc} style={{ height: "250px" }} />
             </div>
 
             {/* <Carousel autoplay

@@ -12,6 +12,7 @@ function UploadPicturePage(props) {
     const [Description, setDescription] = useState("");
     const [Image, setImage] = useState([]);
     const [Loading, setLoading] = useState(true)
+    const [action, setAction] = useState("저장");
 
     const { type, pictureId } = props.match.params
 
@@ -26,24 +27,41 @@ function UploadPicturePage(props) {
     }
     const submitHandler = (event) => {
         event.preventDefault();
-        if (!Name || !Description || !Image) {
-            return alert("모든 값이 입력되어야 합니다.");
+        if (Image.length === 0) {
+            return alert("사진을 등록해주세요.")
         }
-        const body = {
-            writer: props.user.userData._id,
-            title: Name,
-            description: Description,
-            images: Image,
-
+        console.log(Image)
+        if (!Name || !Description) {
+            return alert("내용이 입력되어야 합니다.");
+        }
+        let api;
+        let body = {};
+        if (type === 'upload') {
+            api = '/api/picture/save'
+            body = {
+                writer: props.user.userData._id,
+                title: Name,
+                description: Description,
+                images: Image,
+            }
+        } else {
+            api = '/api/picture/update'
+            body = {
+                pictureId: props.match.params.pictureId,
+                writer: props.user.userData._id,
+                title: Name,
+                description: Description,
+                images: Image,
+            }
         }
         //서버에 값 전달
-        Axios.post("/api/picture/save", body)
+        Axios.post(api, body)
             .then(response => {
                 if (response.data.success) {
-                    alert("사진 업로드에 성공했습니다.")
+                    alert(`사진 ${action}에 성공했습니다.`)
                     props.history.push("/picture");
                 } else {
-                    alert("사진 업로드에 실패했습니다.")
+                    alert(`사진 ${action}에 실패했습니다.`)
                 }
             })
 
@@ -53,11 +71,13 @@ function UploadPicturePage(props) {
         if (type === 'update') {
             Axios.get(`/api/picture/picturedetail?id=${pictureId}&type=single`)
                 .then(response => {
-                    console.log(response.data[0].images)
                     setImage(response.data[0].images)
                     setLoading(false);
+                    setName(response.data[0].title)
+                    setDescription(response.data[0].description)
                 })
                 .catch(err => alert(err))
+            setAction("수정")
         } else {
             setLoading(false);
         }
@@ -92,8 +112,12 @@ function UploadPicturePage(props) {
                             <br />
                             <br />
                             <Button type="submit" onClick={submitHandler}>
-                                확인
-                </Button>
+                                {
+                                    type === 'upload' ?
+                                        '저장'
+                                        : '수정'
+                                }
+                            </Button>
 
                         </Form>
 

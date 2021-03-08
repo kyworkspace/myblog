@@ -4,6 +4,7 @@ import { Card, Icon, Col, Row, List, Avatar, Button } from 'antd'
 import UploadBoardPage from '../UploadBoardPage/UploadBoardPage';
 import LinesEllipsis from 'react-lines-ellipsis'
 import DetailBoardPage from '../DetailBoardPage/DetailBoardPage';
+import SearchFeatures from '../../../utils/SearchFeatures';
 
 export const getBoardList = (body) => {
     return new Promise((resolve, reject) => {
@@ -78,6 +79,25 @@ function BoardLandingPage(props) {
         setIsDetailModalVisible(true)
         setDetailViewItem(item);
     }
+    const updateSearchTerm = (newSearchTerm) => {
+        setSearchTerm(newSearchTerm);
+
+        let body = {
+            skip: 0, //새로 하는 것이기 때문에 0부터 시작
+            limit: Limit,
+            searchTerm: newSearchTerm,
+        }
+        getBoardList(body).then(response => {
+            if (response.success) {
+                setBoardContents(response.boardList)
+                setPostSize(response.postSize) //더보기 버튼을 보여줄지 말지
+            } else {
+                alert("게시판 목록 정보를 불러오는데 실패하였습니다.")
+            }
+        })
+
+        setSkip(0);
+    }
     const renderBoardList = BoardContents.map((item, idx) => {
         let date = new Date(item.createdAt);
         let year = date.getFullYear();
@@ -86,9 +106,10 @@ function BoardLandingPage(props) {
         return (
             <>
                 <div style={{ marginTop: '1rem' }} />
-                <a key={idx} onClick={() => onDetailBoardModalView(item)}>
+                <a onClick={() => onDetailBoardModalView(item)}>
                     <Card
                         hoverable
+                        key={item._id}
                     >
                         <List.Item>
                             <List.Item.Meta
@@ -118,28 +139,23 @@ function BoardLandingPage(props) {
             <div style={{ textAlign: 'center' }}>
                 <h2>게시판<Icon type="rocket" /></h2>
             </div>
-            {/* Filter */}
-
-            <Row gutter={[16, 16]}>
-                <Col lg={12} xs={24}>
-                    {/* CheckBox */}
-                </Col>
-                <Col lg={12} xs={24}>
-                    {/* RadioBox */}
-
-                </Col>
-            </Row>
             {/* Search */}
             <div style={{ display: 'flex', justifyContent: 'flex-end', margin: '1rem auto' }}>
             </div>
             {/* 글쓰기 */}
-            <div style={{ display: 'flex', justifyContent: 'flex-end', margin: '1rem auto' }}>
-                <Button onClick={() => onBoardUploadModalHandler(true)}>새로운 글쓰기</Button>
+            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+
             </div>
             {/* Card */}
             <Row gutter={[16, 16]}>
-                <div>검색</div>
-                <Col lg={18}>
+
+                <Col lg={18} key="left">
+                    <div style={{
+                        justifyContent: 'flex-end', display: 'flex', margin: '1rem auto'
+                    }}>
+                        < SearchFeatures refreshFunction={updateSearchTerm} />
+                        <Button onClick={() => onBoardUploadModalHandler(true)}>새로운 글쓰기</Button>
+                    </div>
                     <div style={{ height: '100vh' }}>
                         {renderBoardList}
 
@@ -150,7 +166,7 @@ function BoardLandingPage(props) {
                         }
                     </div>
                 </Col>
-                <Col lg={6}>
+                <Col lg={6} key="right">
                     <List.Item>
                         <List.Item.Meta
                             title={"개인 인적 사항"}

@@ -4,9 +4,10 @@ import { Card, Icon, Col, Row } from 'antd'
 import Meta from 'antd/lib/card/Meta';
 import ImageSlider from '../../../utils/ImageSlider';
 import CheckBox from './Sections/CheckBox';
-import { continents, prices } from './Sections/Datas';
+import { pictureCount, dateRange } from './Sections/Datas';
 import RadioBox from './Sections/RadioBox';
 import SearchFeatures from './Sections/SearchFeatures';
+import SearchDateRange from '../../../utils/SearchDateRange';
 
 function PictureLandingPage() {
     const [Pictures, setPictures] = useState([]);
@@ -66,15 +67,17 @@ function PictureLandingPage() {
         let month = date.getMonth() + 1;
         let day = date.getDate();
         return (
-            <Col key={i} xl={3} lg={4} md={6} xs={24}>
-                <Card
-                    cover={<a href={`/picture/detail/${picture._id}`}> <ImageSlider images={picture.images} /> </a>}
-                >
-                    <Meta
-                        title={picture.title}
-                        description={year + "-" + month + "-" + day}
-                    />
-                </Card>
+            <Col key={i} xl={6} lg={8} md={12} xs={24}>
+                <a href={`/picture/detail/${picture._id}`}>
+                    <Card
+                        cover={<ImageSlider images={picture.images} />}
+                    >
+                        <Meta
+                            title={picture.title}
+                            description={year + "-" + month + "-" + day}
+                        />
+                    </Card>
+                </a>
             </Col>
 
         )
@@ -85,7 +88,7 @@ function PictureLandingPage() {
         //넘어오는 값이 filters임
         const newFilters = { ...Filters };
 
-        if (category === "price") {
+        if (category === "dateRange") {
             let priceValues = handlePrice(filters)
             newFilters[category] = priceValues
         } else {
@@ -96,11 +99,11 @@ function PictureLandingPage() {
         setFilters(newFilters)
     }
     const handlePrice = (filterValue) => {
-        const data = prices;
+        const data = dateRange;
         let array = [];
         for (let key in data) {
             if (data[key]._id == parseInt(filterValue, 10)) {
-                array = data[key].array;
+                array = data[key].value;
             }
         }
         return array;
@@ -135,13 +138,17 @@ function PictureLandingPage() {
             {/* Filter */}
 
             <Row gutter={[16, 16]}>
-                <Col lg={12} xs={24}>
+                <Col lg={8} xs={24}>
                     {/* CheckBox */}
-                    < CheckBox list={continents} handlerFilters={filter => handlerFilters(filter, "continents")} />
+                    < CheckBox list={pictureCount} handlerFilters={filter => handlerFilters(filter, "continents")} />
                 </Col>
-                <Col lg={12} xs={24}>
+                <Col lg={8} xs={24}>
                     {/* RadioBox */}
-                    <RadioBox list={prices} handlerFilters={filter => handlerFilters(filter, "price")} />
+                    <RadioBox list={dateRange} handlerFilters={filter => handlerFilters(filter, "dateRange")} />
+                </Col>
+                <Col lg={8} xs={24}>
+                    {/* RadioBox */}
+                    <SearchDateRange />
                 </Col>
             </Row>
             {/* Search */}

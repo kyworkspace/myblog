@@ -22,6 +22,13 @@ const boardSchema = mongoose.Schema({
     }
 
 }, { timestamps: true });
+boardSchema.index({
+    description: 'text',
+}, {
+    weights: {
+        description: 5
+    }
+})
 //timestamps ==> 만들날과 업데이트한 날이 기록되어 표시됨
 
 const Board = mongoose.model('Board', boardSchema); //컬렉션(테이블)명, 스키마, 사용자정의명(여기선안씀)

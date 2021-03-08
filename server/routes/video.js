@@ -13,7 +13,7 @@ const { Subscriber } = require('../models/Subscriber');
 //Storage Multer Config
 let storage = multer.diskStorage({
     destination: (req, file, cb) => { //업로드 경로 여기서는 절대경로로 프로젝트 루트폴더에 있는 uploads 폴더
-        cb(null, "uploads/");
+        cb(null, "uploads/video/");
     },
     filename: (req, file, cb) => { //파일명 설정 날짜_원본명
         cb(null, `${Date.now()}_${file.originalname}`);

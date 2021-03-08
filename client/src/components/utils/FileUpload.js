@@ -3,27 +3,40 @@ import Dropzone from 'react-dropzone'
 import { Icon } from 'antd';
 import Axios from 'axios';
 
+/**
+ * 사진을 드랍존에 떨어뜨릴 경우.
+ * 루트 파일에 업로드함
+ * 경로는 uploads/pictures
+ * **/
+const pictureInsert = (file) => {
+    const formData = new FormData();
+    const config = {
+        header: { 'content-type': 'multipart/form-data' }
+    }
+    formData.append("file", file)
+    return new Promise((resolve, reject) => {
+        Axios.post("/api/picture/image", formData, config)
+            .then(response => {
+                resolve(response);
+            })
+    })
+}
+
+
 function FileUpload(props) {
 
     const { parentImages } = props;
     const [Images, setImages] = useState(parentImages.length > 0 ? parentImages : []);
-    const dropHandler = (files) => {
-        let formData = new FormData();
-        const config = {
-            header: { 'content-type': 'multipart/form-data' }
-        }
-        formData.append("file", files[0])
-        Axios.post('/api/util/image', formData, config)
-            .then(response => {
-                if (response.data.success) {
-                    //원래 이미지에 새로운 이미지(경로)를 추가해서 붙이는 거임
-                    setImages([...Images, response.data.filePath])
-                    //부모 컴포넌트에 값 전달
-                    props.refreshFunction([...Images, response.data.filePath]);
-                } else {
-                    alert("파일을 업로드하는데 실패하였습니다.");
-                }
+    const dropHandler = async (files) => {
+        const uploadFileList = await Promise.all(
+            files.map(file => {
+                return pictureInsert(file).then(response => {
+                    return response.data.filePath
+                });
             })
+        )
+        setImages([...Images, ...uploadFileList])
+        props.refreshFunction([...Images, ...uploadFileList])
     }
     const deleteHandler = (image) => {
         //삭제하고자하는 이미지 인덱스
@@ -52,7 +65,7 @@ function FileUpload(props) {
 
                             {...getRootProps()}
                         >
-                            <input {...getInputProps()} />
+                            <input {...getInputProps()} accept='image/*' />
                             <Icon type="plus" style={{ fontSize: '3rem' }} />
                             이미지를 올려주세요
                         </div>

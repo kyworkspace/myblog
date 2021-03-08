@@ -82,20 +82,21 @@ function LandingPage() {
     return (
         <div style={{ width: '60%', margin: '3rem auto' }}>
             <div style={{ textAlign: 'center' }}>
-                <h2>KYP's Page<Icon type="plain" /></h2>
+                <h1>KYP's Page<Icon type="plain" /></h1>
             </div>
+
             {
                 Loading ?
                     <div>로딩중</div>
                     :
                     <>
-                        <Row gutter={[16, 16]}>
+                        <Row gutter={[24, 24]}>
                             <Col lg={12} xs={24}>
                                 <a href="/picture">
-                                    <Title level={3}>최근 등록된 사진</Title>
+                                    <Title level={4}>최근 등록된 사진</Title>
                                     {
                                         Pictures.length > 0 ?
-                                            <MainPageImageSlider images={Pictures} />
+                                            <MainPageImageSlider images={Pictures} width="50%" />
                                             :
                                             <div style={{ textAlign: 'center', width: "100%", height: "300px" }}>
                                                 <img src={empty} style={{ width: 100, height: 100 }} />
@@ -107,14 +108,14 @@ function LandingPage() {
                             </Col>
                             <Col lg={12} xs={24}>
                                 <div style={{ width: "100%", height: "100%" }}>
-                                    <Title level={3}>최근 등록된 동영상</Title>
-                                    <video style={{ height: '300px' }} src={`http://localhost:5000/${Video.filePath}`} controls />
+                                    <Title level={4}>최근 등록된 동영상</Title>
+                                    <video style={{ height: '250px' }} src={`http://localhost:5000/${Video.filePath}`} controls />
                                 </div>
                             </Col>
                         </Row>
                         <Row gutter={[16, 16]}>
                             <Col lg={24} xs={24}>
-                                <Title level={3}>최근 등록된 게시물</Title>
+                                <Title level={4}>최근 등록된 게시물</Title>
                                 <List
                                     itemLayout="horizontal"
                                     dataSource={BoardContents}
