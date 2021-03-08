@@ -16,12 +16,9 @@ function DetailBoardPage(props) {
             <Modal title={[<Avatar src={item.writer.image} />, <Text >{item.writer.name}</Text>]} visible={props.isModalVisible} onOk={() => props.ModalHandler(false)}>
                 <div style={{ maxWidth: '700px', margin: '2rem auto' }}>
                     <Form >
-                        <label>제목</label>
-                        <br />
-                        <Text>{item.title}</Text>
-                        <br />
-                        <br />
                         <label>설명</label>
+                        <br/>
+                        <br/>
                         <div style={{ whiteSpace: 'pre-line' }}>
                             {item.description}
                         </div>

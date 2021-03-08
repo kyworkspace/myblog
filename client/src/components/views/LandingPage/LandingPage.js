@@ -80,9 +80,9 @@ function LandingPage() {
     }
 
     return (
-        <div style={{ width: '75%', margin: '3rem auto' }}>
+        <div style={{ width: '60%', margin: '3rem auto' }}>
             <div style={{ textAlign: 'center' }}>
-                <h2>KYP LANDING<Icon type="plain" /></h2>
+                <h2>KYP's Page<Icon type="plain" /></h2>
             </div>
             {
                 Loading ?

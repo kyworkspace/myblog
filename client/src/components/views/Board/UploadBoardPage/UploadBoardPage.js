@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { withRouter } from "react-router-dom";
 import { Typography, Button, Form, Input, Modal, Avatar } from 'antd';
 import Axios from 'axios';
 import { useSelector } from 'react-redux';
@@ -8,25 +9,24 @@ const { TextArea } = Input;
 
 
 function UploadBoardPage(props) {
-    const [Title, setTitle] = useState("");
     const [Description, setDescription] = useState("");
     const user = useSelector(state => state.user)
-    const TitileHandler = (e) => {
-        setTitle(e.currentTarget.value);
-    }
     const DescriptionHandler = (e) => {
         setDescription(e.currentTarget.value);
     }
     const handleOk = () => {
         console.log(user)
-        if (!Title || !Description) {
-            return alert("모든 값이 입력되어야 합니다.");
+        if(!user.userData.isAuth){
+            alert("로그인을 해주세요.")
+            props.history.push('/login')
+            return;
+        }
+        if (!Description) {
+            return alert("내용을 입력해주세요.");
         }
         const body = {
             writer: user.userData._id,
-            title: Title,
             description: Description,
-
         }
         // 서버에 값 전달
         Axios.post("/api/board/save", body)
@@ -46,7 +46,6 @@ function UploadBoardPage(props) {
         modalReset();
     }
     const modalReset = () => {
-        setTitle("");
         setDescription("");
     }
 
@@ -56,12 +55,9 @@ function UploadBoardPage(props) {
                 <Modal title={[<Avatar src={user.userData.image} />, <p>게시물 업로드</p>]} visible={props.isModalVisible} onOk={handleOk} onCancel={handleCancel} >
                     <div style={{ maxWidth: '700px', margin: '2rem auto' }}>
                         <Form >
-                            <label>제목</label>
-                            <Input value={Title} onChange={TitileHandler} />
-                            <br />
                             <br />
                             <label>설명</label>
-                            <TextArea rows={15} value={Description} onChange={DescriptionHandler} />
+                            <TextArea rows={15} value={Description} onChange={DescriptionHandler} placeholder="오늘 하루는 어떠셨나요?"/>
                             <br />
                             <br />
                         </Form>
@@ -72,4 +68,4 @@ function UploadBoardPage(props) {
     )
 }
 
-export default UploadBoardPage
+export default withRouter(UploadBoardPage)

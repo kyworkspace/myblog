@@ -51,8 +51,8 @@ function VideoLandingPage() {
     })
 
     return (
-        <div style={{ width: '85%', margin: "3rem auto" }}>
-            <Title level={2} > Recommened </Title>
+        <div style={{ width: '70%', margin: "3rem auto" }}>
+            <Title level={2} > 동영상 갤러리 <Icon type="rocket" /></Title>
             <hr />
             <Row gutter={[32, 16]}>
 

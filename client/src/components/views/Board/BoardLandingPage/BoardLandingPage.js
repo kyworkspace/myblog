@@ -34,9 +34,11 @@ function BoardLandingPage(props) {
             skip: Skip,
             limit: Limit,
         }
+        console.log(`페이지 로딩`)
         getBoardList(body).then(response => {
             if (response.success) {
-                setBoardContents([...BoardContents, ...response.boardList])
+                console.log(response)
+                setBoardContents(response.boardList)
                 setPostSize(response.postSize) //더보기 버튼을 보여줄지 말지
             } else {
                 alert("게시판 목록 정보를 불러오는데 실패하였습니다.")
@@ -91,7 +93,7 @@ function BoardLandingPage(props) {
                         <List.Item>
                             <List.Item.Meta
                                 avatar={<Avatar src={item.writer.image} />}
-                                title={[item.title, <div style={{ textAlign: "right", float: "right" }}>{year + "-" + month + "-" + day}</div>]}
+                                title={[item.writer.name, <div style={{ textAlign: "right", float: "right" }}>{year + "-" + month + "-" + day}</div>]}
                                 description={<LinesEllipsis
                                     text={item.description}
                                     maxLine='3'
@@ -112,7 +114,7 @@ function BoardLandingPage(props) {
     //  Filter
 
     return (
-        <div style={{ width: '75%', margin: '3rem auto' }}>
+        <div style={{ width: '60%', margin: '3rem auto' }}>
             <div style={{ textAlign: 'center' }}>
                 <h2>게시판<Icon type="rocket" /></h2>
             </div>
@@ -136,6 +138,7 @@ function BoardLandingPage(props) {
             </div>
             {/* Card */}
             <Row gutter={[16, 16]}>
+                <div>검색</div>
                 <Col lg={18}>
                     <div style={{ height: '100vh' }}>
                         {renderBoardList}

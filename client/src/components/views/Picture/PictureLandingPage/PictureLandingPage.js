@@ -128,7 +128,7 @@ function PictureLandingPage() {
     }
 
     return (
-        <div style={{ width: '75%', margin: '3rem auto' }}>
+        <div style={{ width: '60%', margin: '3rem auto' }}>
             <div style={{ textAlign: 'center' }}>
                 <h2>사진 갤러리<Icon type="rocket" /></h2>
             </div>
