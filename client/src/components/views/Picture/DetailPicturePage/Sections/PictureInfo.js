@@ -1,5 +1,5 @@
 import React from 'react'
-import { Descriptions, Button } from 'antd';
+import { Descriptions, Button, Tag } from 'antd';
 import { useDispatch, useSelector } from 'react-redux'
 import { withRouter } from 'react-router-dom';
 import Axios from 'axios';
@@ -36,6 +36,11 @@ function PictureInfo(props) {
             >
                 <Descriptions.Item label="업로드 날짜" span={2}>{props.detail.createdAt}</Descriptions.Item>
                 <Descriptions.Item label="조회수" span={2}>{props.detail.views}</Descriptions.Item>
+                <Descriptions.Item label="태그" span={2}>{props.detail.tags.map((v) => { return <Tag>{v}</Tag> })}</Descriptions.Item>
+            </Descriptions>
+            <br />
+            <br />
+            <Descriptions bordered title="Description ">
                 <Descriptions.Item label="Description" span={2}>{props.detail.description}</Descriptions.Item>
             </Descriptions>
             <br />
@@ -48,8 +53,6 @@ function PictureInfo(props) {
                 </div>
 
             }
-
-
         </div>
     )
 }

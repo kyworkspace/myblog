@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import { Collapse, Checkbox, Row, Col } from 'antd';
+import PropType from 'prop-types';
 const { Panel } = Collapse;
 function CheckBox(props) {
     //선택된 키값들 배열
     const [Checked, setChecked] = useState([]);
+    const { title } = props;
 
     const handleToggle = (value) => {
         //누른것의 인덱스를 구하고
@@ -31,7 +33,7 @@ function CheckBox(props) {
     return (
         <div>
             <Collapse defaultActiveKey={['0']}>
-                <Panel header="사진 몇장?" key="1">
+                <Panel header={title} key="1">
                     <Row gutter={[16, 16]}>
                         {renderCheckBoxList()}
                     </Row>
@@ -39,6 +41,12 @@ function CheckBox(props) {
             </Collapse>
         </div>
     )
+}
+
+CheckBox.propTypes = {
+    title: PropType.string,
+    handlerFilters: PropType.func,
+    list: PropType.array,
 }
 
 export default CheckBox

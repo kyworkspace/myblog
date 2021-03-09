@@ -46,22 +46,23 @@ router.post("/pictures", (req, res) => {
     let term = req.body.searchTerm;
     //필터 적용하기 req.body.filters
     let findArgs = {};
-
-    // for (let key in req.body.filters) {
-    //     //key => continents or price
-    //     if (req.body.filters[key].length > 0) {//각 필터가 있을때
-    //         if (key === "price") {
-    //             findArgs[key] = {
-    //                 $gte: req.body.filters[key][0],
-    //                 $lte: req.body.filters[key][1],
-    //             }
-    //         } else {
-    //             findArgs[key] = req.body.filters[key];
-    //         }
-    //     }
-    // }
+    for (let key in req.body.filters) {
+        //key => continents or price
+        if (req.body.filters[key].length > 0) {//각 필터가 있을때
+            console.log(key)
+            if (key === "price") {
+                findArgs[key] = {
+                    $gte: req.body.filters[key][0],
+                    $lte: req.body.filters[key][1],
+                }
+            } else if (key === "dateRange") {
+                findArgs['createdAt'] = { $gte: new Date(req.body.filters[key][0]), $lte: new Date(req.body.filters[key][1]) };
+            } else {
+                findArgs[key] = req.body.filters[key];
+            }
+        }
+    }
     //텍스트 검색시 의 조건
-
     if (term) {
         Picture.find(findArgs)
             .find({ $text: { $search: term } }) //텍스트적용 하는곳
@@ -132,7 +133,8 @@ router.post("/pictures", (req, res) => {
                 $set: {
                     images: req.body.images,
                     title: req.body.title,
-                    description: req.body.description
+                    description: req.body.description,
+                    tags: req.body.tags
                 }
             },
             (err) => {

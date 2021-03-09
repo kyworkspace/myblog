@@ -1,18 +1,20 @@
 import React, { useState } from 'react'
-import {Collapse, Radio} from 'antd';
-const {Panel} = Collapse ;
+import PropType from 'prop-types';
+import { Collapse, Radio } from 'antd';
+const { Panel } = Collapse;
 
 
 function RadioBox(props) {
 
     const [Value, setValue] = useState(0)
+    const { title } = props;
 
-    const renderRadioBox=() =>props.list && props.list.map((item,i)=>(
+    const renderRadioBox = () => props.list && props.list.map((item, i) => (
         <React.Fragment>
-                <Radio key = {item._id} value={item._id}>{item.name}</Radio>
+            <Radio key={item._id} value={item._id}>{item.name}</Radio>
         </React.Fragment>
     ))
-    const handleChange = (e) =>{
+    const handleChange = (e) => {
         setValue(e.target.value)
         props.handlerFilters(e.target.value)
     }
@@ -20,14 +22,20 @@ function RadioBox(props) {
     return (
         <div>
             <Collapse defaultActiveKey={['1']}>
-                <Panel header="Price">
+                <Panel header={title}>
                     <Radio.Group onChange={handleChange} value={Value}>
-                    {renderRadioBox()}
+                        {renderRadioBox()}
                     </Radio.Group>
                 </Panel>
-            </Collapse>            
+            </Collapse>
         </div>
     )
 }
+RadioBox.propTypes = {
+    title: PropType.string,
+    handlerFilters: PropType.func,
+    list: PropType.array,
+}
+
 
 export default RadioBox

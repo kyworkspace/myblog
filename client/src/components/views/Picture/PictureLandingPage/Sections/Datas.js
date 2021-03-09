@@ -21,7 +21,7 @@ const pictureCount = [
     }
 ]
 
-const dateRange = [
+const dateBefore = [
     {
         "_id": 0,
         "name": "전체",
@@ -35,17 +35,17 @@ const dateRange = [
     {
         "_id": 2,
         "name": "1주일 전",
-        "value": 2
+        "value": 7
     },
     {
         "_id": 3,
         "name": "한달 전",
-        "value": 3
+        "value": 31
     },
     {
         "_id": 4,
         "name": "1년 전",
-        "value": 4
+        "value": 365
     },
     // {
     //     "_id": 5,
@@ -56,5 +56,4 @@ const dateRange = [
 
 export {
     pictureCount,
-    dateRange
 }

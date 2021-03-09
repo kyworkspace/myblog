@@ -4,10 +4,10 @@ import { Card, Icon, Col, Row } from 'antd'
 import Meta from 'antd/lib/card/Meta';
 import ImageSlider from '../../../utils/ImageSlider';
 import CheckBox from './Sections/CheckBox';
-import { pictureCount, dateRange } from './Sections/Datas';
+import { pictureCount } from './Sections/Datas';
 import RadioBox from './Sections/RadioBox';
 import SearchFeatures from './Sections/SearchFeatures';
-import SearchDateRange from '../../../utils/SearchDateRange';
+import SearchDateRangePicker from '../../../utils/SearchDateRange';
 
 function PictureLandingPage() {
     const [Pictures, setPictures] = useState([]);
@@ -15,9 +15,10 @@ function PictureLandingPage() {
     const [Limit, setLimit] = useState(8)
     const [PostSize, setPostSize] = useState(0) // 목록에 보이는 배열 갯수
     const [Filters, setFilters] = useState({
-        continents: [],
-        price: []
+        pictureCount: 0,
+        dateRange: [],
     });
+    const [SearchDateRange, setSearchDateRange] = useState([]);
     const [SearchTerm, setSearchTerm] = useState("")
 
     useEffect(() => {
@@ -26,10 +27,10 @@ function PictureLandingPage() {
             skip: Skip,
             limit: Limit,
         }
-        getProducts(body)
+        getPictures(body)
     }, [])
 
-    const getProducts = (body) => {
+    const getPictures = (body) => {
         Axios.post("/api/picture/pictures", body)
             .then(response => {
                 if (response.data.success) {
@@ -57,9 +58,10 @@ function PictureLandingPage() {
             limit: Limit,
             loadMore: true
         }
-        getProducts(body)
+        getPictures(body)
         setSkip(skip);
     }
+
 
     const renderCards = Pictures.map((picture, i) => {
         let date = new Date(picture.createdAt);
@@ -87,35 +89,28 @@ function PictureLandingPage() {
     const handlerFilters = (filters, category) => {
         //넘어오는 값이 filters임
         const newFilters = { ...Filters };
-
-        if (category === "dateRange") {
-            let priceValues = handlePrice(filters)
-            newFilters[category] = priceValues
-        } else {
-            newFilters[category] = filters
-        }
+        let priceValues = handlePrice(filters)
+        newFilters[category] = priceValues
         showFilterResults(newFilters);
         //필터 보존
         setFilters(newFilters)
     }
     const handlePrice = (filterValue) => {
-        const data = dateRange;
-        let array = [];
+        const data = pictureCount;
+        let obj = new Object();
         for (let key in data) {
             if (data[key]._id == parseInt(filterValue, 10)) {
-                array = data[key].value;
+                obj = data[key].value;
             }
         }
-        return array;
+        return obj;
     }
-    const showFilterResults = (filters) => {
-        let body = {
-            skip: 0, //새로 하는 것이기 때문에 0부터 시작
-            limit: Limit,
-            filters: filters
-        }
-        getProducts(body)
-        setSkip(0);
+    const searchDateRangeHandler = (dateList) => {
+        setSearchDateRange(dateList);
+        const newFilters = { ...Filters };
+        newFilters['dateRange'] = dateList;
+        showFilterResults(newFilters);
+        setFilters(newFilters)
     }
     const updateSearchTerm = (newSearchTerm) => {
         setSearchTerm(newSearchTerm);
@@ -126,10 +121,22 @@ function PictureLandingPage() {
             filters: Filters,
             searchTerm: newSearchTerm,
         }
-        getProducts(body)
+        getPictures(body)
         setSkip(0);
     }
+    const showFilterResults = (filters) => {
 
+        let body = {
+            skip: 0, //새로 하는 것이기 때문에 0부터 시작
+            limit: Limit,
+            filters: filters
+        }
+
+        console.log(body)
+
+        getPictures(body)
+        setSkip(0);
+    }
     return (
         <div style={{ width: '60%', margin: '3rem auto' }}>
             <div style={{ textAlign: 'center' }}>
@@ -140,15 +147,15 @@ function PictureLandingPage() {
             <Row gutter={[16, 16]}>
                 <Col lg={8} xs={24}>
                     {/* CheckBox */}
-                    < CheckBox list={pictureCount} handlerFilters={filter => handlerFilters(filter, "continents")} />
+                    < CheckBox title="#해시태그" list={pictureCount} handlerFilters={filter => handlerFilters(filter, "pictureCount")} />
                 </Col>
                 <Col lg={8} xs={24}>
                     {/* RadioBox */}
-                    <RadioBox list={dateRange} handlerFilters={filter => handlerFilters(filter, "dateRange")} />
+                    <RadioBox title="사진 수" list={pictureCount} handlerFilters={filter => handlerFilters(filter, "pictureCount")} />
                 </Col>
                 <Col lg={8} xs={24}>
                     {/* RadioBox */}
-                    <SearchDateRange />
+                    <SearchDateRangePicker onRangePicker={searchDateRangeHandler} />
                 </Col>
             </Row>
             {/* Search */}

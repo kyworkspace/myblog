@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Typography, Button, Form, Input } from 'antd';
 import FileUpload from '../../../utils/FileUpload';
 import Axios from 'axios';
+import EditableTagGroup from '../../../utils/EditableTagGroup';
 
 const { Title } = Typography;
 const { TextArea } = Input;
-
 
 function UploadPicturePage(props) {
     const [Name, setName] = useState("");
@@ -13,6 +13,7 @@ function UploadPicturePage(props) {
     const [Image, setImage] = useState([]);
     const [Loading, setLoading] = useState(true)
     const [action, setAction] = useState("저장");
+    const [tagList, setTagList] = useState([])
 
     const { type, pictureId } = props.match.params
 
@@ -43,6 +44,7 @@ function UploadPicturePage(props) {
                 title: Name,
                 description: Description,
                 images: Image,
+                tags: tagList
             }
         } else {
             api = '/api/picture/update'
@@ -52,6 +54,7 @@ function UploadPicturePage(props) {
                 title: Name,
                 description: Description,
                 images: Image,
+                tags: tagList
             }
         }
         //서버에 값 전달
@@ -67,14 +70,18 @@ function UploadPicturePage(props) {
 
 
     }
+    const TagConfirmHandler = (list) => {
+        setTagList(list)
+    }
     useEffect(() => {
         if (type === 'update') {
             Axios.get(`/api/picture/picturedetail?id=${pictureId}&type=single`)
                 .then(response => {
                     setImage(response.data[0].images)
-                    setLoading(false);
                     setName(response.data[0].title)
                     setDescription(response.data[0].description)
+                    setTagList(response.data[0].tags)
+                    setLoading(false);
                 })
                 .catch(err => alert(err))
             setAction("수정")
@@ -109,6 +116,11 @@ function UploadPicturePage(props) {
                             <br />
                             <label>설명</label>
                             <TextArea value={Description} onChange={DescriptionHandler} />
+                            <br />
+                            <br />
+                            <label>#태그 입력#</label>
+                            <br />
+                            <EditableTagGroup list={tagList} onInputed={TagConfirmHandler} />
                             <br />
                             <br />
                             <Button type="submit" onClick={submitHandler}>

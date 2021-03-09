@@ -26,6 +26,10 @@ const pictureSchema = mongoose.Schema({
     views: { //조회수
         type: Number,
         default: 0
+    },
+    tags: {
+        type: Array,
+        default: []
     }
 
 }, { timestamps: true });
