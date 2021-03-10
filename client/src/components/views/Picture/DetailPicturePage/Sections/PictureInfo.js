@@ -45,8 +45,9 @@ function PictureInfo(props) {
             </Descriptions>
             <br />
             <br />
+            {console.log(user.userData._id)}
             {
-                props.detail.writer._id === user.userData._id &&
+                !user.userData.error && props.detail.writer._id === user.userData._id &&
                 <div style={{ textAlign: 'right' }}>
                     <Button type="primary" onClick={onUpdatePicture}>수정</Button>
                     <Button type="danger" onClick={onDeletePicture}>삭제</Button>

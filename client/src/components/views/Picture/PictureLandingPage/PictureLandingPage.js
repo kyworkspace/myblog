@@ -132,8 +132,6 @@ function PictureLandingPage() {
             filters: filters
         }
 
-        console.log(body)
-
         getPictures(body)
         setSkip(0);
     }

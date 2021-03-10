@@ -48,28 +48,31 @@ router.post("/pictures", (req, res) => {
     let findArgs = {};
     for (let key in req.body.filters) {
         //key => continents or price
-        if (req.body.filters[key].length > 0) {//각 필터가 있을때
+        // if (req.body.filters[key].length > 0) {//각 필터가 있을때
             console.log(key)
             if (key === "price") {
                 findArgs[key] = {
                     $gte: req.body.filters[key][0],
                     $lte: req.body.filters[key][1],
                 }
-            } else if (key === "dateRange") {
+            }else if(key === 'pictureCount'){
+                findArgs["images"] = {$size : req.body.filters[key]};
+            } else if (key === "dateRange" &&req.body.filters[key].length>0 ) {
                 findArgs['createdAt'] = { $gte: new Date(req.body.filters[key][0]), $lte: new Date(req.body.filters[key][1]) };
-            } else {
-                findArgs[key] = req.body.filters[key];
             }
-        }
+            //  else {
+            //     findArgs[key] = req.body.filters[key];
+            // }
+        // }
     }
     //텍스트 검색시 의 조건
     if (term) {
         Picture.find(findArgs)
-            .find({ $text: { $search: term } }) //텍스트적용 하는곳
-            //   .find({  
-            //     "title": { '$regex': term },
-            //     "description": { '$regex': term },
-            //  })
+            // .find({ $text: { $search: term } }) //텍스트적용 하는곳
+              .find({  
+                "title": { '$regex': term },
+                "description": { '$regex': term },
+             })
             .populate("writer")
             .skip(skip) //가져올 인덱스 전달
             .limit(limit)// 몽고디비에 가져올 숫자를 던져줌
