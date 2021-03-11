@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import PropType from 'prop-types';
 import { Collapse, Radio } from 'antd';
 const { Panel } = Collapse;
 
 
-function RadioBox(props) {
+const RadioBox= memo((props) =>{
 
     const [Value, setValue] = useState(0)
     const { title } = props;
@@ -30,7 +30,7 @@ function RadioBox(props) {
             </Collapse>
         </div>
     )
-}
+})
 RadioBox.propTypes = {
     title: PropType.string,
     handlerFilters: PropType.func,

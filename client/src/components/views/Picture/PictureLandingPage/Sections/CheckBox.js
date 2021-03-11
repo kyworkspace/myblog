@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import { Collapse, Checkbox, Row, Col } from 'antd';
 import PropType from 'prop-types';
 const { Panel } = Collapse;
-function CheckBox(props) {
+const CheckBox = memo((props) =>{
     //선택된 키값들 배열
     const [Checked, setChecked] = useState([]);
     const { title } = props;
@@ -41,7 +41,7 @@ function CheckBox(props) {
             </Collapse>
         </div>
     )
-}
+})
 
 CheckBox.propTypes = {
     title: PropType.string,

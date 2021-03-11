@@ -18,6 +18,7 @@ import DetailPicturepage from './views/Picture/DetailPicturePage/DetailPicturepa
 import BoardLandingPage from './views/Board/BoardLandingPage/BoardLandingPage';
 import UploadBoardPage from './views/Board/UploadBoardPage/UploadBoardPage';
 import DetailBoardPage from './views/Board/DetailBoardPage/DetailBoardPage'
+import ProfileMain from './views/Profile/ProfileMain';
 
 //null   Anyone Can go inside
 //true   only logged in user can go inside
@@ -33,8 +34,11 @@ function App() {
           <Route exact path="/login" component={Auth(LoginPage, false)} />
           <Route exact path="/register" component={Auth(RegisterPage, false)} />
 
-          <Route exact path="/board" component={Auth(BoardLandingPage, null)} />
+          {/* 프로필 */}
+          <Route exact path="/profile/:contentName" component={Auth(ProfileMain,null)}/>
 
+
+          <Route exact path="/board" component={Auth(BoardLandingPage, null)} />
           {/* 리스트 */}
           <Route exact path="/picture" component={Auth(PictureLandingPage, null)} />
           {/* 업로드 */}

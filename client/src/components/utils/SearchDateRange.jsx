@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { memo, useState } from 'react'
 import PropType from 'prop-types';
 import { Collapse, Row,DatePicker, Button} from 'antd';
 import moment from 'moment';
@@ -10,7 +10,7 @@ const dateFormat = 'YYYY/MM/DD';
 const today = new Date();
 const oneMonthAgo = new Date(today.getFullYear(),today.getMonth()-1,today.getDate())
 
-function SearchDateRange(props) {
+const SearchDateRange = memo((props) => {
     const [startDate, setStartDate] = useState(oneMonthAgo);
     const [endDate, setEndDate] = useState(today);
     // useEffect(() => {
@@ -44,7 +44,7 @@ function SearchDateRange(props) {
             </Collapse>
         </div>
     )
-}
+})
 
 SearchDateRange.propTypes={
     onRangePicker : PropType.func

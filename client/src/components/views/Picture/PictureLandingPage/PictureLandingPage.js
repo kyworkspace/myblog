@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import Axios from 'axios';
 import { Card, Icon, Col, Row } from 'antd'
 import Meta from 'antd/lib/card/Meta';
@@ -22,6 +22,7 @@ function PictureLandingPage() {
     const [SearchTerm, setSearchTerm] = useState("")
 
     useEffect(() => {
+        console.log('useEffect')
         //필터값이 들어간 바디
         let body = {
             skip: Skip,
@@ -86,15 +87,18 @@ function PictureLandingPage() {
     });
 
     //  Filter
-    const handlerFilters = (filters, category) => {
-        //넘어오는 값이 filters임
+    const handlerFilters =  useCallback(
+        (filters, category) => {
+            //넘어오는 값이 filters임
         const newFilters = { ...Filters };
         let priceValues = handlePrice(filters)
         newFilters[category] = priceValues
         showFilterResults(newFilters);
         //필터 보존
         setFilters(newFilters)
-    }
+        },
+        [SearchTerm] //검색단어가 바뀔때 리셋
+    )
     const handlePrice = (filterValue) => {
         const data = pictureCount;
         let obj = new Object();
@@ -113,8 +117,7 @@ function PictureLandingPage() {
         setFilters(newFilters)
     }
     const updateSearchTerm = (newSearchTerm) => {
-        setSearchTerm(newSearchTerm);
-
+        console.log(newSearchTerm)
         let body = {
             skip: 0, //새로 하는 것이기 때문에 0부터 시작
             limit: Limit,
@@ -123,25 +126,26 @@ function PictureLandingPage() {
         }
         getPictures(body)
         setSkip(0);
+        setSearchTerm(newSearchTerm);
     }
     const showFilterResults = (filters) => {
-
+        console.log(SearchTerm)
         let body = {
             skip: 0, //새로 하는 것이기 때문에 0부터 시작
             limit: Limit,
-            filters: filters
+            filters: filters,
+            searchTerm : SearchTerm
         }
 
         getPictures(body)
         setSkip(0);
     }
-    return (
+    return  useMemo(() => (
         <div style={{ width: '60%', margin: '3rem auto' }}>
             <div style={{ textAlign: 'center' }}>
                 <h2>사진 갤러리<Icon type="rocket" /></h2>
             </div>
             {/* Filter */}
-
             <Row gutter={[16, 16]}>
                 <Col lg={8} xs={24}>
                     {/* CheckBox */}
@@ -172,7 +176,7 @@ function PictureLandingPage() {
                 </div>
             }
         </div>
-    )
+    ), [Pictures])   
 }
 
 export default PictureLandingPage

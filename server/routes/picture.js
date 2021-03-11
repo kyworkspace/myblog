@@ -44,20 +44,21 @@ router.post("/pictures", (req, res) => {
     let limit = req.body.limit ? parseInt(req.body.limit) : 20;
     let skip = req.body.skip ? parseInt(req.body.skip) : 0;
     let term = req.body.searchTerm;
+    console.log(req.body.filters)
+    console.log(term)
     //필터 적용하기 req.body.filters
     let findArgs = {};
     for (let key in req.body.filters) {
         //key => continents or price
         // if (req.body.filters[key].length > 0) {//각 필터가 있을때
-            console.log(key)
             if (key === "price") {
                 findArgs[key] = {
                     $gte: req.body.filters[key][0],
                     $lte: req.body.filters[key][1],
                 }
-            }else if(key === 'pictureCount'){
+            }else if(key === 'pictureCount' && req.body.filters[key] > 0 ){
                 findArgs["images"] = {$size : req.body.filters[key]};
-            } else if (key === "dateRange" &&req.body.filters[key].length>0 ) {
+            } else if (key === "dateRange" && req.body.filters[key].length>0 ) {
                 findArgs['createdAt'] = { $gte: new Date(req.body.filters[key][0]), $lte: new Date(req.body.filters[key][1]) };
             }
             //  else {

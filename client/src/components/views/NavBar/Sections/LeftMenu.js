@@ -7,7 +7,7 @@ function LeftMenu(props) {
   return (
     <Menu mode={props.mode}>
       <Menu.Item><a href="/"><span>메인 홈</span></a></Menu.Item>
-      <Menu.Item><a href="/profile"><span>프로필</span></a></Menu.Item>
+      <Menu.Item><a href="/profile/main"><span>프로필</span></a></Menu.Item>
       <SubMenu title={<span>게시판</span>}>
         <Menu.Item key="setting:1"><a href="/board"></a>게시판</Menu.Item>
       </SubMenu>
