@@ -1,0 +1,11 @@
+@import '~antd/dist/antd.css';
+
+.profile-content-box {
+    width: 1500px;
+}
+
+@media (max-width: 767px) {
+    .profile-content-box {
+        width: 460px;
+    }
+  }

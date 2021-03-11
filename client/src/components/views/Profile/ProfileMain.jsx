@@ -3,12 +3,19 @@ import React, { memo, useCallback } from 'react'
 import LeftNav from './LeftNav';
 import Profile from './ProfileSection/Profile';
 import RightContent from './RightContent';
-import Gugudan from './WebGamesSection/Gugudan';
+import Gugudan from './WebGamesSection/Gugudan/Gugudan';
+import "./ProfileContent.css"
+import NumberBaseballHooks from './WebGamesSection/Baseball/NumberBaseballHooks';
+import WordRelay from './WebGamesSection/WordRelay/WordRelay';
+import LottoHooks from './WebGamesSection/Lotto/LottoHooks';
+import ResponseCheck from './WebGamesSection/ResponseCheck/ResponseCheck';
+import RSPHooks from './WebGamesSection/RSP/RSPHooks';
+import TikTakTok from './WebGamesSection/TicTakTo/TikTakTok';
+import MineFind from './WebGamesSection/MineSearch/MineFind';
 
 const { Content, Sider } = Layout;
 
 const ProfileMain=memo((props) =>{
-    
     const contentName = props.match.params.contentName;
     let renderComponent;
 
@@ -16,45 +23,47 @@ const ProfileMain=memo((props) =>{
         case "main":
                 renderComponent = <Profile/>
             break;
-            case "Gugudan":
+        case "Gugudan":
                 renderComponent = <Gugudan/>
+            break;
+        case "NumberBaseball":
+                renderComponent = <NumberBaseballHooks/>
+            break;
+        case "WordRelay":
+                renderComponent = <WordRelay/>
+            break;
+        case "Lotto":
+                renderComponent = <LottoHooks/>
+            break;
+        case "ResponseCheck":
+                renderComponent = <ResponseCheck/>
+            break;
+        case "RSP":
+                renderComponent = <RSPHooks/>
+            break;
+        case "TicTacTo":
+                renderComponent = <TikTakTok/>
+            break;
+        case "MineSearch":
+                renderComponent = <MineFind/>
             break;
         default:
             break;
     }
-    
-    
-    console.log('contentName',contentName)
-    console.log(renderComponent)
     return (
-        <>
+        <div>
         <Layout style={{display:'flex', float:'left'}}>
-        {console.log('rendering')}
-            <Sider
-                onBreakpoint="lg"
-                collapsedWidth="0"
-                onBreakpoint={broken => {
-                    console.log(broken);
-                  }}
-                onCollapse={(collapsed, type) => {
-                console.log(collapsed, type);
-                }}
-            >
+            <Sider>
                 <LeftNav contentName={contentName}/>
             </Sider>
-            <div style={{width:50}}/> {/* 사이더와 컨텐트 분리 */}
+            {/* <div style={{width:50}}/> 사이더와 컨텐트 분리 */}
             <Content style={{ margin: '24px 16px 0' }}>
-                <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
+                <div className="profile-content-box" >
                     <RightContent>{renderComponent}</RightContent>
                 </div>
             </Content>
         </Layout>
-        {/* <Layout>
-            <Content style={{width:'100%', height : '100%'}}>
-                <RightContent>{renderComponent}</RightContent>
-            </Content>
-        </Layout> */}
-        </>
+        </div>
     )
 })
 

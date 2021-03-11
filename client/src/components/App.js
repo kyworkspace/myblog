@@ -16,8 +16,6 @@ import PictureLandingPage from './views/Picture/PictureLandingPage/PictureLandin
 import UploadPicturePage from './views/Picture/UploadPicturePage/UploadPicturePage';
 import DetailPicturepage from './views/Picture/DetailPicturePage/DetailPicturepage';
 import BoardLandingPage from './views/Board/BoardLandingPage/BoardLandingPage';
-import UploadBoardPage from './views/Board/UploadBoardPage/UploadBoardPage';
-import DetailBoardPage from './views/Board/DetailBoardPage/DetailBoardPage'
 import ProfileMain from './views/Profile/ProfileMain';
 
 //null   Anyone Can go inside
@@ -35,7 +33,7 @@ function App() {
           <Route exact path="/register" component={Auth(RegisterPage, false)} />
 
           {/* 프로필 */}
-          <Route exact path="/profile/:contentName" component={Auth(ProfileMain,null)}/>
+          <Route exact path="/profile/:contentName" component={Auth(ProfileMain, null)} />
 
 
           <Route exact path="/board" component={Auth(BoardLandingPage, null)} />
