@@ -60,10 +60,9 @@
     <img src ='https://user-images.githubusercontent.com/45280952/110480767-343db180-812a-11eb-9d7e-f5a2f457a78b.png' width="300px" align ="left">
     <img src ='https://user-images.githubusercontent.com/45280952/110482764-5801f700-812c-11eb-82ce-4e9bd4eff8e5.png' width="300px" align ="left">
 </div>
-<hr/>
 <br/>
+<hr/>
 
-###
 ### 2021-03-11
  - 프로필 메뉴 작업
  - 웹 게임 옮김.
@@ -72,10 +71,9 @@
  <div width="100%">
     <img src='https://user-images.githubusercontent.com/45280952/110789502-4b5bdb00-82b3-11eb-8766-891b284b73c0.png' width ="300px" align="left">
  </div>
-
+<br/>
 <hr/>
 
-### 
  ### 2021-03-12
  - 웹 게임 부분 withStyle 적용. 상세설명은 차후 입력 예정
  - 영화 평점 사이트 이관 완료
