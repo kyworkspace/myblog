@@ -63,6 +63,7 @@
 <br/>
 <hr/>
 
+
 ### 2021-03-11
  - 프로필 메뉴 작업
  - 웹 게임 옮김.
@@ -71,6 +72,7 @@
     <img src='https://user-images.githubusercontent.com/45280952/110789502-4b5bdb00-82b3-11eb-8766-891b284b73c0.png' width ="300px" align="left">
 <br/>
 <hr/>
+
 
  ### 2021-03-12
  - 웹 게임 부분 withStyle 적용. 상세설명은 차후 입력 예정
