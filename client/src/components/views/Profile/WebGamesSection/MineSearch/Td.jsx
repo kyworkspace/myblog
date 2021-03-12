@@ -111,7 +111,7 @@ const Td = memo(({rowIndex,cellIndex, styles}) => {
         >
             {getTdText(tableData[rowIndex][cellIndex])}
         </td>
-    ), [tableData[rowIndex][cellIndex]])
+    ), [tableData[rowIndex][cellIndex],halted])
     // return <RealTd onClickTd={onClickTd} onRightClickTd={onRightClickTd} data={tableData[rowIndex][cellIndex]}/>
     
 })

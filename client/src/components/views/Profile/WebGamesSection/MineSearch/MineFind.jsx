@@ -1,6 +1,7 @@
 import React, { useReducer,createContext, useMemo, useEffect } from 'react'
 import Table from './Table'
 import Form from './Form';
+import MineHistory from './MineHistory';
 
 //CELL STATE
 export const CODE={
@@ -24,13 +25,15 @@ const initialState = {
     },
     result :'',
     halted : true,
-    openedCount : 0
+    openedCount : 0,
+    history : [],
 }
 //createContext 기본값을 넣어줄수 있음
 export const TableContext = createContext({
     tableData :[],
     halted : true,
     dispatch:()=>{}, //일단 모양만 맞춤
+    history : [],
 });
 
 //프로바이더 묶어줘야 하위 컴포넌트들이 공유 가능
@@ -145,9 +148,20 @@ const reducer = (state,action)=>{
             //승리 조건 체크
             let halted = false;
             let result = '';
+            let history = [...state.history];
             if(state.data.row*state.data.cell - state.data.mine === state.openedCount+openedCount){ //승리
                 halted = true;
-                result =`${state.timer}만에 승리하셨습니다.`
+                result =`${state.timer}초 만에 승리하셨습니다.`
+                history = [
+                    ...state.history,
+                    {
+                        row : state.data.row,
+                        cell : state.data.cell,
+                        mine : state.data.mine,
+                        time : state.timer,
+                        result : '승리'
+                    }
+                ]
             }
 
             return {
@@ -156,15 +170,29 @@ const reducer = (state,action)=>{
                 openedCount : state.openedCount+openedCount,
                 halted,
                 result,
+                history
             }}
         case CLICK_MINE :{
             const tableData = [...state.tableData];
             tableData[action.row] = [...state.tableData[action.row]];
             tableData[action.row][action.cell] = CODE.CLICKED_MINE;
+            let history = [
+                ...state.history,
+                {
+                    row : state.data.row,
+                    cell : state.data.cell,
+                    mine : state.data.mine,
+                    time : state.timer,
+                    result : '패배'
+                }
+            ]
             return{
              ...state,
                 tableData,
-                halted :true, //게임 멈추는 동작
+                halted :true,
+                result : '지뢰를 선택하셨습니다. 다시 시작 해주세요', //게임 멈추는 동작
+                history
+                
             }}
         case FLAG_CELL : 
             {const tableData = [...state.tableData];
@@ -246,9 +274,9 @@ const plantMine=(row,cell,mine)=>{
 const MineFind=()=> {
 
     const [state, dispatch] = useReducer(reducer, initialState)
-    const { tableData, timer, result, halted } = state;
+    const { tableData, timer, result, halted,history } = state;
 
-    const value = useMemo(() => ({tableData,halted, dispatch}),[tableData,halted])
+    const value = useMemo(() => ({tableData,halted, dispatch,history}),[tableData,halted,history])
     //컨텍스트 API를 사용할때 provider에서 value값을 직접 넘겨주게 되면 리렌더링 될때 context도 새롭게 정의가 되어 하부 컴포넌트들도 리렌더링되어 효율성이 떨어진다.
     //그렇기 때문에 useMemo로 캐싱하여 Provider의 value가 유지 되도록 하며, 이 값은 tableData가 갱신될때만 바뀌도록 한다.
 
@@ -269,6 +297,8 @@ const MineFind=()=> {
             <div > 진행 시간 : {state.timer}</div>
             <Table/>
             <div > {state.result}</div>
+            <div>게임 기록</div>
+            <MineHistory/>
         </TableContext.Provider>
     )
 }
