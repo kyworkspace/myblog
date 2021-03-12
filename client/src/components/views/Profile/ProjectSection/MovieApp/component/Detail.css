@@ -1,0 +1,16 @@
+.movie_detail{
+    align-items: center;
+    background-color: white;
+    width: inherit;
+    height: inherit;
+    margin-top: 100px;
+    box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25), 0 8px 16px -8px rgba(0, 0, 0, 0.3),0 -6px 16px -6px rgba(0,0,0,0.025);
+}
+.movie_detail table{
+    text-align: center;
+    vertical-align: middle;
+    border: solid 1px;
+}
+.movie_detail table td{
+    border: solid 1px;
+}

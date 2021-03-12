@@ -1,13 +1,26 @@
 import React, { memo, useState } from 'react'
 import { Menu } from 'antd'
 import SubMenu from 'antd/lib/menu/SubMenu'
-import {withRouter} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
 import { PieChartOutlined } from '@ant-design/icons'
 
 const LeftNav = memo((props) => {
 
     const handleClick =({item, key, keyPath, domEvent})=>{
-        props.history.push(`/profile/${key}`)
+        let url = "/profile";
+        switch (keyPath[1]) {
+            case 'sub1': // 프로젝트
+                url += `/project/${key}/Home`;
+                break;
+            case 'sub2': //웹게임
+                url += `/webgame/${key}`;
+                break;
+        
+            default:
+                url +="/main/mySelf"
+                break;
+        }
+        props.history.push(url)
     }
     const[Collapsed,setCollapsed] = useState(true);
 
@@ -15,7 +28,7 @@ const LeftNav = memo((props) => {
     return (
         <Menu
         onClick={handleClick}
-        style={{height:780 }}
+        style={{height:'780px' }}
         defaultSelectedKeys={['1']}
         defaultOpenKeys={['sub1','sub2']}
         mode="inline"

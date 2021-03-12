@@ -33,7 +33,10 @@ function App() {
           <Route exact path="/register" component={Auth(RegisterPage, false)} />
 
           {/* 프로필 */}
-          <Route exact path="/profile/:contentName" component={Auth(ProfileMain, null)} />
+          <Route exact path="/profile/:gubun" component={Auth(ProfileMain, null)} />
+          <Route exact path="/profile/:gubun/:contentName" component={Auth(ProfileMain, null)} />
+          <Route exact path="/profile/:gubun/:contentName/:pageName" component={Auth(ProfileMain, null)} />
+          {/* <Route exact path="/profile/project/:contentName" component={Auth(ProfileMain, null)} /> */}
 
 
           <Route exact path="/board" component={Auth(BoardLandingPage, null)} />

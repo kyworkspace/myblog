@@ -70,3 +70,10 @@
  <div>
     <img src='https://user-images.githubusercontent.com/45280952/110789502-4b5bdb00-82b3-11eb-8766-891b284b73c0.png' width ="300px" align="left">
  </div>
+
+<br/>
+
+ ### 2021-03-12
+ - 웹 게임 부분 withStyle 적용. 상세설명은 차후 입력 예정
+ - 영화 평점 사이트 이관 완료
+ - 컨텐츠 부분 withStyle로 반응형으로 제작
