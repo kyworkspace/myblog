@@ -61,7 +61,7 @@
     <img src ='https://user-images.githubusercontent.com/45280952/110482764-5801f700-812c-11eb-82ce-4e9bd4eff8e5.png' width="300px" align ="left">
 
   
-<hr/>
+---
   
   
 ### 2021-03-11
@@ -71,7 +71,7 @@
  - 웹 게임 CSS 미적용 부분 남음. withStyle 사용예정
     <img src='https://user-images.githubusercontent.com/45280952/110789502-4b5bdb00-82b3-11eb-8766-891b284b73c0.png' width ="300px" align="left">
   
-<hr/>
+---
 
 
  ### 2021-03-12
