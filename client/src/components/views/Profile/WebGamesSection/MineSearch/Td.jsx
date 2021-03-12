@@ -1,6 +1,6 @@
 import React, { memo, useCallback, useContext, useMemo } from 'react'
 import { CODE, OPEN_CELL, TableContext, FLAG_CELL, NORMALIZE_CELL, QUESTION_CELL,CLICK_MINE } from './MineFind'
-
+import { withStyles, css} from '../../../ui/withStyles'
 const getTdStyle=(code)=>{
     switch(code){
         case CODE.MINE:
@@ -49,7 +49,7 @@ const getTdText =(code)=>{
     }
 }
 
-const Td = memo(({rowIndex,cellIndex}) => {
+const Td = memo(({rowIndex,cellIndex, styles}) => {
     
     const {tableData, dispatch,halted} = useContext(TableContext);
     const onClickTd = useCallback(
@@ -102,29 +102,37 @@ const Td = memo(({rowIndex,cellIndex}) => {
         },
         [tableData[rowIndex][cellIndex],halted],
     )
-    // return useMemo(() => (
-    //     <td
-    //         style={getTdStyle(tableData[rowIndex][cellIndex])}
-    //         onClick={onClickTd}
-    //         onContextMenu={onRightClickTd} //우클릭
-    //     >
-    //         {getTdText(tableData[rowIndex][cellIndex])}
-    //     </td>
-    // ), [tableData[rowIndex][cellIndex]])
-    return <RealTd onClickTd={onClickTd} onRightClickTd={onRightClickTd} data={tableData[rowIndex][cellIndex]}/>
+    return useMemo(() => (
+        <td
+            style={getTdStyle(tableData[rowIndex][cellIndex])}
+            onClick={onClickTd}
+            onContextMenu={onRightClickTd} //우클릭
+            {...css(styles.td)}
+        >
+            {getTdText(tableData[rowIndex][cellIndex])}
+        </td>
+    ), [tableData[rowIndex][cellIndex]])
+    // return <RealTd onClickTd={onClickTd} onRightClickTd={onRightClickTd} data={tableData[rowIndex][cellIndex]}/>
     
 })
 
-const RealTd =memo(({onClickTd, onRightClickTd, data})=>{
-    return (
-        <td
-            style={getTdStyle(data)}
-            onClick={onClickTd}
-            onContextMenu={onRightClickTd} //우클릭
-        >
-            {getTdText(data)}
-        </td>
-    )
-})
+// const RealTd =memo(({onClickTd, onRightClickTd, data})=>{
+//     return (
+//         <td {...css(styles.td)}
+//             style={getTdStyle(data)}
+//             onClick={onClickTd}
+//             onContextMenu={onRightClickTd} //우클릭
+//         >
+//             {getTdText(data)}
+//         </td>
+//     )
+// })
 
-export default Td
+export default withStyles(()=>({
+    td : {
+        border: '1px solid black',
+        width: '40px',
+        height: '40px',
+        textAlign: 'center'
+    }
+}))(Td)

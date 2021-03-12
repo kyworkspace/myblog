@@ -44,8 +44,6 @@ router.post("/pictures", (req, res) => {
     let limit = req.body.limit ? parseInt(req.body.limit) : 20;
     let skip = req.body.skip ? parseInt(req.body.skip) : 0;
     let term = req.body.searchTerm;
-    console.log(req.body.filters)
-    console.log(term)
     //필터 적용하기 req.body.filters
     let findArgs = {};
     for (let key in req.body.filters) {

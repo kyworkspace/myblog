@@ -1,12 +1,17 @@
 import React, { memo } from 'react'
 import Tr from './Tr'
-
-const Table=memo(({onClick,tableData,dispatch}) =>{
+import { withStyles, css} from '../../../ui/withStyles'
+const Table=memo(({onClick,tableData,dispatch,styles}) =>{
     return (
-        <table>
+        <table {...css(styles.table)}>
             {Array(tableData.length).fill().map((tr,i)=><Tr key={i} rowIndex={i} rowData={tableData[i]} dispatch={dispatch} >{''}</Tr>)}
         </table>
     )
 });
 
-export default Table
+export default withStyles(()=>({
+    table : {
+        borderCollapse : 'collapse'
+    }
+
+}))(Table)

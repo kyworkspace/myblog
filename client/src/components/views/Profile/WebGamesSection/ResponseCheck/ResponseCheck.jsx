@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {withStyles,css} from '../../../ui/withStyles'
 
 class ResponseCheck extends Component {
     state={
@@ -54,11 +55,12 @@ class ResponseCheck extends Component {
 
     render() {
         const {message,result} = this.state;
+        const {styles} = this.props;
         return (
             <>
                 <div 
                     id="screen"
-                    className={this.state.state}
+                    {...css(styles.screen,styles[this.state.state])}
                     onClick={this.onClickScreen}
                 >
                     {message}
@@ -78,4 +80,25 @@ class ResponseCheck extends Component {
     }
 }
 
-export default ResponseCheck;
+export default withStyles(()=>({
+    screen:{
+        width : '300px',
+        height : '200px',
+        textAlign : 'center',
+        userSelect : 'none'
+    },
+
+    waiting  : {
+        backgroundColor : 'aqua',
+    },
+    ready : {
+        backgroundColor : 'red',
+        color : 'white',
+    },
+    now : {
+        backgroundColor : 'greenyellow',
+    }
+
+
+
+}))(ResponseCheck);

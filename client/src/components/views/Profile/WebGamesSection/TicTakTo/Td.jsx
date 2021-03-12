@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useEffect, useRef } from 'react';
 import {CLICK_CELL} from './TikTakTok'
-
-const Td = memo(({rowIndex,cellIndex,dispatch,cellData})=>{
+import {withStyles,css} from '../../../ui/withStyles';
+const Td = memo(({rowIndex,cellIndex,dispatch,cellData, styles})=>{
 
     // const ref = useRef([]);
     // useEffect(() => {
@@ -20,8 +20,15 @@ const Td = memo(({rowIndex,cellIndex,dispatch,cellData})=>{
     },[cellData])
 
     return(
-        <td onClick={onClickTd}>{cellData}</td>
+        <td {...css(styles.td)} onClick={onClickTd}>{cellData}</td>
     )
 });
 
-export default Td;
+export default withStyles(()=>({
+    td : {
+        border: '1px solid black',
+        width: '40px',
+        height: '40px',
+        textAlign: 'center'
+    }
+}))(Td);

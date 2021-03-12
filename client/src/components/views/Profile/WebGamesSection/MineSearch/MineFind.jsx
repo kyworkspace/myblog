@@ -143,7 +143,6 @@ const reducer = (state,action)=>{
             }
             checkAround(action.row,action.cell) // 찍은 위치 기준 검사 시작
             //승리 조건 체크
-            console.log(openedCount)
             let halted = false;
             let result = '';
             if(state.data.row*state.data.cell - state.data.mine === state.openedCount+openedCount){ //승리

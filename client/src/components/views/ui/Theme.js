@@ -5,7 +5,7 @@ const BREAKPOINT_NAMES = {
     SMALL: 'small',
 };
 
-export const breakpoints = {
+const breakpoints = {
     [BREAKPOINT_NAMES.LARGE]: 1128,
     [BREAKPOINT_NAMES.MEDIUM]: 744,
     [BREAKPOINT_NAMES.SMALL]: 327,
